@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internship showcase: Ayaz Elahi, BRAC Technology Unit</title>
+<!--
+  HOW TO CUSTOMISE
+  1. Real Agami prototype: put your prototype file (e.g. agami.html) next to this file, then
+     search for "LIVE PROTOTYPE" below and follow the note.
+  2. Voice assistant recording: search for "DEMO RECORDING" below.
+  3. Project manager screens: when the app exists, replace the contents of each .pm-layer.
+  Presenting: Down/Right arrow, Page Down or Space = next step. Up/Left or Page Up = back.
+  B or . = blank the screen (most clickers have a button for this).
+  Everything is in this one file with no outside libraries, so it runs offline.
+-->
+<style>
+/* ---------- Chapter colour tokens (animated as you scroll between chapters) ---------- */
+@property --bg     { syntax: '<color>'; inherits: true; initial-value: #B3005E; }
+@property --ink    { syntax: '<color>'; inherits: true; initial-value: #FFF4F9; }
+@property --muted  { syntax: '<color>'; inherits: true; initial-value: #F5C6DD; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: #FFD84D; }
+@property --card   { syntax: '<color>'; inherits: true; initial-value: #9A0051; }
+@property --line   { syntax: '<color>'; inherits: true; initial-value: rgba(255,244,249,.22); }
+
+:root{
+  --sans: "Segoe UI Variable Display","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Nirmala UI","Noto Sans Bengali","Kohinoor Bangla",sans-serif;
+  --bn: "Nirmala UI","Noto Sans Bengali","Kohinoor Bangla","Bangla Sangam MN","Vrinda",sans-serif;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+body[data-theme="intro"]{
+  --bg:#B3005E; --ink:#FFF4F9; --muted:#F5C6DD; --accent:#FFD84D; --card:#9A0051; --line:rgba(255,244,249,.22);
+}
+body[data-theme="agami"]{
+  --bg:#FBF3E6; --ink:#2B211E; --muted:#8A7A72; --accent:#D6006F; --card:#FFFFFF; --line:rgba(43,33,30,.14);
+  --bn:"Hind Siliguri","Noto Sans Bengali","Nirmala UI","Kohinoor Bangla",sans-serif;
+}
+body[data-theme="voice"]{
+  --bg:#16113D; --ink:#EEEBFF; --muted:#A9A3D6; --accent:#FF5DB1; --card:#221B55; --line:rgba(238,235,255,.14);
+}
+body[data-theme="pm"]{
+  --bg:#FFF5FA; --ink:#2B2B2B; --muted:#6b6b6b; --accent:#E6007E; --card:#FFFFFF; --line:rgba(230,0,126,.16);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:18px; line-height:1.55;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  transition:--bg .9s var(--ease), --ink .9s var(--ease), --muted .9s var(--ease),
+             --accent .9s var(--ease), --card .9s var(--ease), --line .9s var(--ease);
+}
+.bn{font-family:var(--bn)}
+h1,h2,h3,h4,h5{margin:0;font-weight:700;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* ---------- Presenter chrome ---------- */
+.progress{position:fixed;top:0;left:0;width:100%;height:4px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:50}
+.rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:14px}
+.rail a{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-decoration:none}
+.rail .lbl{font-size:13px;font-weight:600;white-space:nowrap;opacity:0;transform:translateX(6px);transition:opacity .3s, transform .3s}
+.rail .dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);opacity:.5;transition:transform .3s, opacity .3s}
+.rail a:hover .lbl,.rail a:focus-visible .lbl{opacity:1;transform:none}
+.rail a.active .dot{background:var(--ink);opacity:1;transform:scale(1.3)}
+.keyhint{position:fixed;right:22px;bottom:18px;z-index:40;font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;transition:opacity .6s}
+.keyhint kbd{font:600 12px/1 var(--sans);border:1px solid var(--line);border-radius:6px;padding:5px 7px;background:var(--card);color:var(--ink)}
+.keyhint .sep{width:10px}
+.keyhint.hide{opacity:0;pointer-events:none}
+.blackout{position:fixed;inset:0;background:#000;z-index:100;opacity:0;pointer-events:none;transition:opacity .4s}
+.blackout.on{opacity:1;pointer-events:auto}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1.25fr .9fr;align-items:center;gap:6vw;padding:12vh 8vw 14vh}
+.hero-inner{will-change:transform,opacity}
+.hero h1{font-size:clamp(46px,6.4vw,96px);line-height:.98;max-width:12ch;margin-bottom:32px}
+.hero .lede{font-size:clamp(19px,1.6vw,24px);max-width:34ch;color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.byline{margin-top:56px;font-size:16px;color:var(--muted);max-width:44ch}
+.byline strong{color:var(--ink);font-weight:600;display:block;font-size:19px}
+.w{display:inline-block;opacity:0;transform:translateY(.45em);animation:rise .9s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.contents{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.contents li{opacity:0;transform:translateX(40px);animation:slideIn .9s var(--ease) forwards}
+.contents a{display:grid;grid-template-columns:clamp(84px,9vw,140px) 1fr;align-items:center;gap:18px;text-decoration:none;padding:10px 0;border-top:1px solid var(--line)}
+.contents li:last-child a{border-bottom:1px solid var(--line)}
+.contents .num{font-family:var(--bn);font-weight:700;font-size:clamp(76px,9vw,136px);line-height:1;color:var(--c)}
+.contents b{display:block;font-size:clamp(19px,1.7vw,26px);line-height:1.15}
+.contents small{display:block;font-size:15px;color:var(--muted);margin-top:4px}
+.contents a:hover .num{transform:translateX(-4px)}
+.contents .num{transition:transform .3s var(--ease)}
+@keyframes slideIn{to{opacity:1;transform:none}}
+.scrollcue{position:absolute;left:8vw;bottom:5vh;display:flex;align-items:center;gap:14px;font-size:15px;color:var(--muted)}
+.scrollcue i{display:block;width:2px;height:44px;background:var(--ink);transform-origin:top;animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);opacity:1}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- Chapter intros ---------- */
+.chapter-intro{position:relative;min-height:100vh;display:grid;align-content:center;padding:12vh 8vw;overflow:hidden}
+.chapter-num{position:absolute;right:4vw;top:50%;font-family:var(--bn);font-weight:700;font-size:clamp(260px,42vw,640px);line-height:.8;
+  color:color-mix(in srgb,var(--ink) 9%,var(--bg));transform:translateY(calc(-50% + var(--py,0px)));pointer-events:none;user-select:none}
+.intro-block{position:relative;max-width:900px;opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease), transform 1s var(--ease)}
+.intro-block.in{opacity:1;transform:none}
+.chapter-intro .label{font-size:17px;font-weight:600;color:var(--accent);margin-bottom:18px}
+.chapter-intro h2{font-size:clamp(42px,5.6vw,84px);line-height:1.02;max-width:15ch;margin-bottom:26px}
+.chapter-intro .lead{font-size:clamp(19px,1.6vw,24px);max-width:40ch;color:color-mix(in srgb,var(--ink) 82%,var(--bg))}
+.badge{display:inline-flex;align-items:center;gap:9px;margin-top:30px;font-size:15px;font-weight:600;padding:8px 14px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent)}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- Scrollytelling layout ---------- */
+.scrolly{position:relative;display:grid;grid-template-columns:minmax(340px,.8fr) 1.2fr;grid-template-areas:"steps graphic";padding:0 8vw 0 8vw}
+.graphic-wrap{grid-area:graphic;position:sticky;top:0;height:100vh;align-self:start}
+.graphic{position:relative;width:100%;height:100%;display:grid;place-items:center}
+.graphic::before{content:"";position:absolute;left:50%;top:50%;width:min(76vh,680px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,color-mix(in srgb,var(--card) 70%,transparent) 0%,transparent 68%);pointer-events:none}
+.fit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:50% 50%}
+.steps{grid-area:steps;position:relative;z-index:2;padding:22vh 0 42vh}
+.step{min-height:88vh;display:flex;align-items:center}
+.step-card{max-width:440px;opacity:.22;transform:translateX(-10px);border-left:3px solid transparent;padding-left:22px;transition:opacity .5s ease, transform .6s var(--ease), border-color .5s ease}
+.step.is-active .step-card{opacity:1;transform:none;border-left-color:var(--accent)}
+.step .count{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:14px}
+.step h3{font-size:clamp(30px,2.7vw,42px);line-height:1.08;margin-bottom:18px}
+.step p{font-size:clamp(18px,1.35vw,21px);color:color-mix(in srgb,var(--ink) 86%,var(--bg))}
+.step p + p{margin-top:12px}
+.step .note{font-size:15px;color:var(--muted)}
+
+/* ---------- Agami phone ---------- */
+.phone{--g:#2F7D4F;--g2:#DCEEE2;--y:#E8A324;--y2:#FBEDD2;--m:#D6006F;--m2:#FBE2ED;--b:#2E8B87;--b2:#DCEFEE;--pi:#2B211E;--pm:#8A7A72;
+  position:relative;width:300px;height:620px;border-radius:48px;background:#20140F;padding:10px;
+  box-shadow:0 60px 90px -44px rgba(80,20,50,.5),inset 0 0 0 2px #33231C}
+.phone::before,.phone::after{content:"";position:absolute;width:3px;background:#33231C;border-radius:2px}
+.phone::before{left:-3px;top:120px;height:56px}
+.phone::after{right:-3px;top:160px;height:84px}
+.screen-area{position:relative;width:100%;height:100%;border-radius:38px;overflow:hidden;background:#FBF3E6;color:var(--pi);font-family:var(--bn);line-height:1.35}
+.island{position:absolute;top:10px;left:50%;width:86px;height:24px;margin-left:-43px;background:#151A17;border-radius:14px;z-index:6}
+.statusbar{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:13px;font-weight:600;z-index:5}
+.statusbar .icons{display:flex;gap:5px;align-items:center}
+.statusbar svg{fill:currentColor}
+.screen{position:absolute;inset:0;padding:48px 18px 18px;display:flex;flex-direction:column;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .45s ease, transform .6s var(--ease);background:#FBF3E6}
+.screen.on{opacity:1;transform:none;z-index:2}
+.screen.live{padding:0}
+.screen.live iframe{width:100%;height:100%;border:0}
+.ico{width:24px;height:24px}
+.buzz{position:absolute;top:50%;width:12px;height:64px;margin-top:-32px;opacity:0;pointer-events:none}
+.buzz.l{left:-28px}.buzz.r{right:-28px}
+.buzz::before,.buzz::after{content:"";position:absolute;width:3px;border-radius:3px;background:var(--ink)}
+.buzz::before{top:0;bottom:0}
+.buzz.l::before{right:0}.buzz.l::after{right:7px;top:14px;bottom:14px}
+.buzz.r::before{left:0}.buzz.r::after{left:7px;top:14px;bottom:14px}
+.graphic[data-state="3"] .buzz{animation:buzzfade 1s 1.75s ease-out}
+.graphic[data-state="3"] .phone{animation:shake .45s 1.75s}
+@keyframes shake{20%{transform:translateX(-3px) rotate(-.6deg)}40%{transform:translateX(3px) rotate(.6deg)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+@keyframes buzzfade{15%{opacity:1}100%{opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(.3)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+
+/* before */
+.s-before{background:#fff;padding:50px 14px 14px;font-family:var(--sans);color:#3A3F44}
+.s-before .bar-title{background:#56626B;color:#fff;font-size:11.5px;font-weight:600;padding:8px 10px;border-radius:4px;margin-bottom:8px}
+.s-before .tiny{font-size:9.5px;line-height:1.45;color:#5A6168}
+.s-before table{width:100%;border-collapse:collapse;font-size:9.5px;margin:8px 0}
+.s-before td{border:1px solid #DDE1E4;padding:5px 6px}
+.s-before td + td{text-align:right}
+.s-before .fine{font-size:8.5px;color:#8A9096;line-height:1.45}
+.s-before .btnrow{display:flex;gap:6px;margin-top:auto}
+.s-before .btnrow span{flex:1;font-size:9.5px;border:1px solid #BFC5CA;padding:8px 4px;text-align:center;border-radius:3px}
+.qm{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--m);color:#fff;font:700 22px/40px var(--sans);text-align:center;opacity:0;box-shadow:0 8px 20px -6px rgba(200,0,106,.6)}
+.s-before.on .qm{animation:pop .5s var(--ease) forwards}
+.s-before.on .qm.q1{animation-delay:.7s}.s-before.on .qm.q2{animation-delay:1s}.s-before.on .qm.q3{animation-delay:1.3s}
+.qm.q1{left:196px;top:150px}.qm.q2{left:24px;top:318px}.qm.q3{left:170px;top:452px}
+
+/* shared app parts */
+.spk{width:44px;height:44px;border-radius:50%;background:var(--m2);color:var(--m);display:grid;place-items:center;flex:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.topbar b{font-size:21px}
+.back{width:40px;height:40px;border-radius:12px;background:#F1EADB;display:grid;place-items:center}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:auto}
+.k{height:50px;border-radius:14px;background:#fff;border:1px solid #E6DECB;display:grid;place-items:center;font-size:23px;font-weight:600;box-shadow:0 2px 0 #E6DECB}
+.k.go{background:var(--m);color:#fff;border-color:var(--m);box-shadow:0 2px 0 #8f004e}
+.k.del{font-size:18px;color:var(--pm)}
+.listen{margin-top:auto;height:56px;border-radius:16px;background:var(--pi);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:20px;font-weight:600}
+
+/* login */
+.app-top{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+.app-mark{width:34px;height:34px;border-radius:10px;background:var(--m);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
+.app-name{font-weight:700;font-size:21px;color:var(--m)}
+.prompt{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.prompt b{font-size:23px}
+.field{height:58px;border:2.5px solid var(--m);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;background:#fff}
+.remember{align-self:center;display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--m);background:var(--m2);border-radius:999px;padding:6px 12px;margin:12px 0}
+.remember .ico{width:16px;height:16px}
+.protomode{font-size:12px;color:#8a6d00;background:#fff3d6;border-radius:10px;padding:8px 10px;margin-bottom:12px;line-height:1.4}
+.s-login.on .spk{animation:ring 1.4s .5s 2}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(214,0,111,.3)}50%{box-shadow:0 0 0 12px rgba(214,0,111,0)}}
+
+/* shared login-flow chrome — mobile number, OTP and PIN steps all
+   reuse this exact structure in the real app: a 3-dot step tracker,
+   a big emoji banner, a title, then either a plain or masked
+   display-box, the keypad, and (except PIN, which auto-advances) a
+   circular next button */
+.progdots{display:flex;justify-content:center;gap:8px;margin-bottom:14px}
+.progdot{width:11px;height:11px;border-radius:50%;background:#D8CFC7}
+.progdot.on{background:var(--m)}
+.banner-emoji{text-align:center;font-size:50px;margin:2px 0 6px}
+.stitle{text-align:center;font-size:18px;font-weight:700;margin-bottom:16px}
+.display-box{background:#fff;border:2.5px solid var(--m);border-radius:16px;padding:13px;text-align:center;font-size:25px;font-weight:700;letter-spacing:2px;margin:0 auto 16px;width:88%;min-height:50px;display:flex;align-items:center;justify-content:center}
+.protonote{font-size:11.5px;color:#8a6d00;background:#fff3d6;border-radius:10px;padding:7px 10px;margin-bottom:10px;text-align:center;line-height:1.4}
+.k.blank{visibility:hidden}
+.nextcircle{width:56px;height:56px;border-radius:50%;background:var(--m);color:#fff;display:grid;place-items:center;margin:14px auto 0;font-size:22px}
+
+/* onboarding — mirrors the real app's first-login screen */
+.onb-mascot{margin:6px auto 10px;display:block}
+.onb-bubble{background:#fff;border:2px solid var(--y);border-radius:16px;padding:10px 14px;font-size:13.5px;text-align:center;line-height:1.5;margin:0 auto 14px}
+.onb-card{position:relative;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #EDE1D2;border-radius:16px;padding:12px 14px;margin-bottom:10px;transition:border-color .3s, transform .15s}
+.onb-card .n-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:19px;flex:none}
+.onb-card b{display:block;font-size:15px;line-height:1.3}
+.s-tier.on .onb-card{animation:tileIn .5s var(--ease) both}
+.s-tier.on .onb-card:nth-child(3){animation-delay:.15s}.s-tier.on .onb-card:nth-child(4){animation-delay:.3s}.s-tier.on .onb-card:nth-child(5){animation-delay:.45s}
+.s-tier.on .onb-card.picked{animation:tileIn .5s var(--ease) both, pickPulse .6s 1.1s}
+@keyframes pickPulse{50%{border-color:var(--y);transform:scale(1.03)}}
+.onb-note{margin-top:auto;font-size:12.5px;color:var(--pm);line-height:1.4}
+
+/* pin / otp */
+.dots{position:relative;display:flex;justify-content:center;gap:18px;height:64px;align-items:center}
+.dots i{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--m)}
+.s-pin.on .dots i,.s-otp.on .dots i{animation:fillDot .22s forwards, hideDot .2s forwards}
+.s-pin.on .dots i:nth-child(1),.s-otp.on .dots i:nth-child(1){animation-delay:.35s,1.65s}
+.s-pin.on .dots i:nth-child(2),.s-otp.on .dots i:nth-child(2){animation-delay:.7s,1.65s}
+.s-pin.on .dots i:nth-child(3),.s-otp.on .dots i:nth-child(3){animation-delay:1.05s,1.65s}
+.s-pin.on .dots i:nth-child(4),.s-otp.on .dots i:nth-child(4){animation-delay:1.4s,1.65s}
+@keyframes fillDot{to{background:var(--m);transform:scale(1.12)}}
+@keyframes hideDot{to{opacity:0}}
+.ok{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:var(--m);color:#fff;display:grid;place-items:center;opacity:0}
+.ok .ico{width:30px;height:30px}
+.s-pin.on .ok,.s-otp.on .ok{animation:pop .45s var(--ease) 1.75s forwards}
+.s-pin .k,.s-otp .k{height:46px}
+
+/* dashboard — Novice tier: real app shows a stacked list, not a grid,
+   with a colored left edge + icon disc per category (never color alone) */
+.nlist{display:flex;flex-direction:column;gap:11px}
+.ncard{position:relative;display:flex;align-items:center;gap:13px;background:#fff;border-radius:18px;border:2px solid #f0e6e9;padding:15px 14px;box-shadow:0 10px 22px -18px rgba(43,33,30,.4)}
+.ncard.cat-loan{border-left:6px solid var(--m)}
+.ncard.cat-savings{border-left:6px solid var(--y)}
+.ncard.cat-special{border-left:6px solid var(--b)}
+.ncard.cat-insurance{border-left:6px solid var(--g)}
+.ncard .n-icon{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:21px;flex:none}
+.ncard.cat-loan .n-icon{background:var(--m);color:#fff}
+.ncard.cat-savings .n-icon{background:var(--y);color:#3B2A05}
+.ncard.cat-special .n-icon{background:var(--b);color:#fff}
+.ncard.cat-insurance .n-icon{background:var(--g);color:#fff}
+.ncard b{font-size:16.5px}
+.ncard .n-audio{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--m2);color:var(--m);display:grid;place-items:center;flex:none}
+.s-home.on .ncard{animation:tileIn .5s var(--ease) both;animation-delay:calc(var(--i) * .1s + .1s)}
+@keyframes tileIn{from{opacity:0;transform:translateY(16px) scale(.95)}}
+
+/* paged card — shared by every detail screen (loan, savings, DPS,
+   insurance, profile) in the real app: one field at a time with
+   arrows + dots, not a bar chart or a custom illustration */
+.pgcard{background:#fff;border:3px solid var(--pgc, var(--m));border-radius:20px;padding:22px 16px;text-align:center;margin-top:26px;position:relative}
+.pglabel{font-size:14px;color:var(--pm);margin-bottom:6px}
+.pgvalue{font-size:28px;font-weight:800;color:var(--pgc, var(--m))}
+.pgsub{font-size:12.5px;color:var(--pm);margin-top:6px}
+.pgarrows{display:flex;justify-content:space-between;margin-top:16px}
+.pgarrow{width:40px;height:40px;border-radius:50%;background:#FBF3E6;border:2px solid var(--pgc, var(--m));color:var(--pgc, var(--m));display:grid;place-items:center}
+.pgdots{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.pgdots i{width:8px;height:8px;border-radius:50%;background:var(--grey,#B9AFAF)}
+.pgdots i.on{background:var(--pgc, var(--m))}
+.s-loan .pgcard,.s-save .pgcard{--pgc:var(--m)}
+.s-save .pgcard{--pgc:var(--b)}
+.s-loan.on .pgcard,.s-save.on .pgcard{animation:tileIn .5s var(--ease) both}
+
+/* ---------- Voice assistant ---------- */
+.v-stage{position:relative;width:580px;height:710px}
+.bubble{font-size:17px;line-height:1.55;padding:12px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.who{font-size:13px;font-weight:600;color:var(--muted)}
+.v-q{position:absolute;left:50%;top:6px;white-space:nowrap;border-bottom-left-radius:6px;opacity:0;transform:translate(-50%,10px);transition:opacity .5s, transform .6s var(--ease)}
+.v-q.on{opacity:1;transform:translate(-50%,0)}
+.orb-wrap{position:absolute;left:50%;top:245px;width:320px;height:320px;margin:-160px 0 0 -160px}
+.bar{position:absolute;left:50%;top:calc(50% - 34px);width:4px;height:34px;margin-left:-2px;border-radius:3px;
+  background:linear-gradient(to top,#8D7BFF,#FF8CC6);transform-origin:50% 100%;
+  transform:rotate(var(--a)) translateY(-108px) scaleY(var(--h,.15));opacity:.9}
+.orb-spin{position:absolute;inset:60px;border-radius:50%;opacity:0;transition:opacity .4s;animation:spin 1.1s linear infinite;
+  background:conic-gradient(from 0deg,transparent 0 62%,#8D7BFF 84%,#FF8CC6 100%);
+  -webkit-mask:radial-gradient(circle,transparent 58%,#000 60%);mask:radial-gradient(circle,transparent 58%,#000 60%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.graphic[data-state="3"] .orb-spin{opacity:1}
+.orb{position:absolute;inset:72px;border-radius:50%;transform:scale(calc(1 + var(--amp,0) * .09))}
+.orb-core{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#FFE6F2 0%,#FF74BC 24%,#B64CEB 58%,#3A2594 100%);
+  box-shadow:0 0 60px 6px rgba(255,93,177,.35),0 0 150px 40px rgba(141,123,255,.22);
+  animation:breathe 4s ease-in-out infinite;transition:filter .6s}
+@keyframes breathe{50%{transform:scale(1.04)}}
+.graphic[data-state="0"] .orb-core,.graphic[data-state="1"] .orb-core,.graphic[data-state="5"] .orb-core{filter:saturate(.8) brightness(.92)}
+.graphic[data-state="3"] .orb-core{filter:hue-rotate(-48deg) saturate(1.1)}
+.graphic[data-state="4"] .orb-core{filter:hue-rotate(10deg) brightness(1.08)}
+.v-state{position:absolute;left:0;right:0;top:412px;height:26px}
+.v-state > span{position:absolute;left:50%;top:0;white-space:nowrap;display:flex;align-items:center;gap:9px;font-size:16px;font-weight:600;color:var(--muted);
+  opacity:0;transform:translate(-50%,6px);transition:opacity .35s, transform .35s}
+.v-state > span.on{opacity:1;transform:translate(-50%,0)}
+.v-state i{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.v-state b{font-family:var(--bn);color:var(--ink);font-weight:600}
+.v-slot{position:absolute;left:0;right:0;top:450px;height:150px}
+.v-slot > div{position:absolute;left:50%;top:0;opacity:0;transform:translate(-50%,12px);transition:opacity .45s, transform .55s var(--ease)}
+.v-slot > div.on{opacity:1;transform:translate(-50%,0)}
+.v-docs{display:flex;gap:10px;white-space:nowrap}
+.v-docs span{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-family:var(--bn);font-size:15px}
+.v-docs .ico{width:18px;height:18px;color:var(--accent)}
+.v-docs.on span{animation:fadeUp .45s both}
+.v-docs.on span:nth-child(2){animation-delay:.25s}.v-docs.on span:nth-child(3){animation-delay:.5s}
+.v-a{width:520px;border-bottom-right-radius:6px}
+.v-stack{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:580px}
+.v-stack span{font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.v-stack code{font-family:inherit;color:var(--muted);font-weight:500}
+.pipe{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:flex-start}
+.node{position:relative;z-index:1;width:80px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:12.5px;font-weight:600;line-height:1.25;color:var(--muted);transition:color .4s}
+.node .ic{width:48px;height:48px;border-radius:14px;border:1.5px solid var(--line);display:grid;place-items:center;background:var(--bg);transition:border-color .4s, color .4s, box-shadow .4s}
+.node .ico{width:22px;height:22px}
+.node.on{color:var(--ink)}
+.node.on .ic{border-color:var(--accent);color:var(--accent);box-shadow:0 0 24px -4px var(--accent)}
+.conn{position:relative;z-index:0;width:50px;height:2px;margin:24px -16px 0;background:var(--line);overflow:hidden}
+.conn::after{content:"";position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;transition:transform .5s var(--ease)}
+.conn.on::after{transform:scaleX(1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- Project manager ---------- */
+.pm-stage{position:relative;width:580px;height:600px;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.pm-layer{position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(18px);transition:opacity .45s, transform .6s var(--ease), visibility 0s .6s}
+.pm-layer.on{opacity:1;visibility:visible;transform:none;transition:opacity .5s .1s, transform .6s var(--ease) .1s, visibility 0s}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 26px 50px -34px rgba(18,26,43,.35)}
+.tag{display:inline-block;font-size:11px;font-weight:700;line-height:1;padding:6px 8px;border-radius:6px;background:#FCE4F0;color:#B4005F}
+/* interview */
+.qcard{position:absolute;left:30px;top:34px;width:520px;padding:22px 24px}
+.qhead{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--muted)}
+.qcard h4{font-size:22px;line-height:1.25;margin:14px 0 20px;color:var(--ink)}
+.qnav{display:flex;align-items:center;gap:14px}
+.qnav .arrow{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--muted);flex:none}
+.qnav .arrow .ico{width:16px;height:16px}
+.qnav .field{flex:1;height:46px;border:1.5px solid #E6007E;border-radius:10px;display:flex;align-items:center;padding:0 14px;font-size:14px;color:var(--ink);background:#FCE4F0}
+.qdots{position:absolute;left:30px;top:268px;display:flex;gap:10px}
+.qdot{width:30px;height:30px;border-radius:50%;background:#f0f0f0;color:var(--muted);font-size:12px;font-weight:700;display:grid;place-items:center;border:2px solid transparent}
+.qdot.answered{background:#FCE4F0;color:#B4005F}
+.qdot.current{border-color:#E6007E;color:#B4005F}
+.pm-q.on .qdot{animation:fadeUp .4s both}
+.pm-q.on .qdot:nth-child(2){animation-delay:.08s}.pm-q.on .qdot:nth-child(3){animation-delay:.16s}
+.pm-q.on .qdot:nth-child(4){animation-delay:.24s}.pm-q.on .qdot:nth-child(5){animation-delay:.32s}.pm-q.on .qdot:nth-child(6){animation-delay:.4s}
+.qfoot{position:absolute;left:30px;top:326px;width:480px;font-size:13.5px;color:var(--muted);line-height:1.55}
+.qfoot b{color:var(--ink)}
+.qdone{position:absolute;left:30px;bottom:34px;height:44px;padding:0 22px;border-radius:10px;background:#ececec;color:#8a8a8a;display:inline-flex;align-items:center;font-size:13.5px;font-weight:600}
+/* documents */
+.docs-head{position:absolute;left:30px;top:22px;font-size:14px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:10px}
+.pulse{width:9px;height:9px;border-radius:50%;background:#E6007E;animation:blink 1.2s infinite}
+.docgrid{position:absolute;left:30px;top:64px;width:520px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.doc{position:relative;height:148px;padding:18px;display:flex;flex-direction:column;gap:7px}
+.doc .n{position:absolute;top:16px;right:16px;font-size:12px;font-weight:600;color:var(--muted)}
+.doc b{font-size:17px;line-height:1.25;margin:4px 0 4px;color:var(--ink)}
+.doc i{display:block;height:6px;border-radius:3px;background:rgba(18,26,43,.08)}
+.doc i.s{width:62%}
+.doc em{margin-top:auto;font-size:12.5px;font-weight:600;font-style:normal;color:#1f9d55;opacity:0}
+.pm-docs.on .doc{animation:docIn .55s var(--ease) both;animation-delay:calc(var(--i) * .3s + .15s)}
+.pm-docs.on .doc em{animation:fadeUp .35s both;animation-delay:calc(var(--i) * .3s + .6s)}
+@keyframes docIn{from{opacity:0;transform:translateY(22px) scale(.95)}}
+.docs-foot{position:absolute;left:30px;top:420px;width:500px;font-size:14px;color:var(--muted);line-height:1.5}
+/* signatures */
+.sheet{position:absolute;left:10px;top:40px;width:390px;height:520px;padding:24px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.sheet-top{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+.sheet-top b{font-size:16px;white-space:nowrap;color:var(--ink)}
+.ver{margin-left:auto;white-space:nowrap;font-size:12.5px;font-weight:600;color:var(--muted)}
+.sheet i{display:block;height:7px;border-radius:4px;background:rgba(18,26,43,.08)}
+.sheet i.s{width:70%}
+.req{font-size:13.5px;line-height:1.4;padding:8px 10px;border-radius:8px;background:rgba(18,26,43,.03);color:var(--ink)}
+.siglist{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.sigrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line)}
+.sigrow .av{width:30px;height:30px;border-radius:50%;background:#FCE4F0;color:#B4005F;font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+.sigrow b{font-size:13.5px;display:block;color:var(--ink)}
+.sigrow small{font-size:12px;color:var(--muted)}
+.sigrow .st{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted)}
+.sigrow.done{border-color:#1f9d55;background:rgba(31,157,85,.06)}
+.sigrow.done .st{color:#1f9d55}
+.pm-sign.on .sigrow.done{animation:fadeUp .4s 1.3s both}
+.stamp{position:absolute;left:130px;top:340px;border:3px solid #1f9d55;color:#1f9d55;font-size:22px;font-weight:800;padding:8px 16px;border-radius:10px;transform:rotate(-8deg) scale(2);opacity:0;background:rgba(255,255,255,.9)}
+.pm-sign.on .stamp{animation:stamp .4s 2s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes stamp{to{opacity:1;transform:rotate(-8deg) scale(1)}}
+.comment{position:absolute;right:0;top:150px;width:196px;padding:14px 16px;font-size:14px;line-height:1.45;background:#FFF6D6;border:1px solid #EAD68F;border-radius:14px;box-shadow:0 20px 40px -28px rgba(18,26,43,.4)}
+.comment .who{display:block;margin-bottom:4px;font-weight:700;color:#B4005F}
+.pm-sign.on .comment{animation:fadeUp .5s .3s both}
+/* version history */
+.vh-head{position:absolute;left:30px;right:30px;top:26px;display:flex;justify-content:space-between;align-items:baseline}
+.vh-head b{font-size:19px;color:var(--ink)}
+.vh-head span{font-size:13px;color:var(--muted)}
+.vlist{position:absolute;left:30px;right:30px;top:70px;bottom:30px}
+.vlist::before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:2px;background:rgba(18,26,43,.12)}
+.vrow{position:relative;padding:0 0 22px 44px}
+.vrow::before{content:"";position:absolute;left:6px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;border:2.5px solid #b9b9b9;z-index:1}
+.vrow.current::before{border-color:#E6007E;background:#E6007E;box-shadow:0 0 0 5px #FCE4F0}
+.vrow.restart::before{border-style:dashed;border-color:#b9b9b9;background:#fff}
+.vrow b{display:block;font-size:15px;color:var(--ink)}
+.vrow small{font-size:12.5px;color:var(--muted)}
+.vrow .tag{margin-left:8px}
+.pm-version.on .vrow{animation:fadeUp .5s both;animation-delay:calc(var(--i) * .18s + .15s)}
+/* live collaboration */
+.live-head{position:absolute;left:30px;top:26px;font-size:19px;color:var(--ink)}
+.live-status{position:absolute;left:30px;top:64px;width:520px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:#FCE4F0;color:#B4005F;font-size:13.5px;font-weight:600}
+.live-status .pulse{background:#E6007E}
+.clist{position:absolute;left:30px;top:120px;width:520px;display:flex;flex-direction:column;gap:12px}
+.crow{padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff}
+.crow .who{font-weight:700;font-size:13px;color:#B4005F}
+.crow .when{font-size:11px;color:var(--muted);margin-left:6px}
+.crow p{margin-top:4px;font-size:14px;line-height:1.4;color:var(--ink)}
+.pm-live.on .crow{animation:fadeUp .5s both;animation-delay:calc(var(--i) * .2s + .2s)}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 860px){
+  body{font-size:16px}
+  .rail,.keyhint{display:none}
+  .hero{grid-template-columns:1fr;gap:48px;padding:12vh 7vw 16vh}
+  .scrollcue{left:7vw}
+  .chapter-intro{padding:10vh 7vw}
+  .scrolly{display:block;padding:0}
+  .graphic-wrap{position:sticky;top:0;height:100vh;z-index:1}
+  .graphic{height:56vh;margin-top:4vh}
+  .steps{margin-top:-100vh;padding:70vh 0 30vh;pointer-events:none}
+  .step{min-height:100vh;align-items:flex-end;padding:0 14px 6vh}
+  .step-card{pointer-events:auto;max-width:none;width:100%;opacity:1;padding:18px 20px;border-radius:18px;border:1px solid var(--line);
+    background:color-mix(in srgb,var(--card) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .step:not(.is-active) .step-card{opacity:.55}
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;transition-delay:0s!important}
+  .w,.contents li{opacity:1;transform:none}
+}
+</style>
+</head>
+<body data-theme="intro">
+
+<div class="progress" aria-hidden="true"></div>
+<nav class="rail" aria-label="Chapters">
+  <a href="#top"><span class="lbl">Introduction</span><span class="dot"></span></a>
+  <a href="#agami"><span class="lbl">Accessible Agami</span><span class="dot"></span></a>
+  <a href="#voice"><span class="lbl">Voice assistant</span><span class="dot"></span></a>
+  <a href="#pm"><span class="lbl">Project manager</span><span class="dot"></span></a>
+</nav>
+<div class="keyhint" aria-hidden="true"><kbd>↓</kbd><kbd>PgDn</kbd>&nbsp;next<span class="sep"></span><kbd>↑</kbd>&nbsp;back<span class="sep"></span><kbd>B</kbd>&nbsp;blank screen</div>
+<div class="blackout" aria-hidden="true"></div>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-spk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></g></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></g></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 17h6"/></g></symbol>
+    <symbol id="i-jar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8v3H8z"/><path d="M8 6c-3 1-4 3-4 5v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8c0-2-1-4-4-5"/><path d="M4 13h16"/></g></symbol>
+    <symbol id="i-taka" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="16.8" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor" font-family="Nirmala UI, Noto Sans Bengali, Kohinoor Bangla, sans-serif">৳</text></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20c0 1-2 2-5 2"/></g></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></g></symbol>
+    <symbol id="i-stream" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13M13 4l4 4-4 4M20 16H7M11 12l-4 4 4 4"/></g></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></g></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 2-2h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- ======================= HERO ======================= -->
+<section class="hero" id="top" data-theme="intro" data-stop>
+  <div class="hero-inner">
+    <h1><span class="w" style="animation-delay:.1s">Technology</span> <span class="w" style="animation-delay:.2s">that</span> <span class="w" style="animation-delay:.3s">meets</span> <span class="w" style="animation-delay:.4s">people</span> <span class="w" style="animation-delay:.5s">where</span> <span class="w" style="animation-delay:.6s">they</span> <span class="w" style="animation-delay:.7s">are.</span></h1>
+    <p class="lede w" style="animation-delay:.95s">Three projects from my internship with BRAC's Technology Unit, told the way this page works: one scroll at a time.</p>
+    <p class="byline w" style="animation-delay:1.15s"><strong>Ayaz Elahi</strong>Intern, Technology Unit, BRAC Microfinance Programme</p>
+  </div>
+  <ol class="contents" aria-label="What I'll show">
+    <li style="animation-delay:1.1s"><a href="#agami" style="--c:#E8A324"><span class="num" aria-hidden="true">১</span><span><b>Accessible Agami</b><small>App for members with low literacy</small></span></a></li>
+    <li style="animation-delay:1.25s"><a href="#voice" style="--c:#CDBFFF"><span class="num" aria-hidden="true">২</span><span><b>Bengali voice assistant</b><small>Ask out loud, hear grounded answers</small></span></a></li>
+    <li style="animation-delay:1.4s"><a href="#pm" style="--c:#E6007E"><span class="num" aria-hidden="true">৩</span><span><b>AI project manager</b><small>From first questions to signed-off documents</small></span></a></li>
+  </ol>
+  <div class="scrollcue" aria-hidden="true"><i></i>Scroll, or press the down arrow</div>
+</section>
+
+<!-- ======================= CHAPTER 1: AGAMI ======================= -->
+<section class="chapter" id="agami" data-theme="agami">
+  <header class="chapter-intro" data-stop>
+    <div class="chapter-num" aria-hidden="true">১</div>
+    <div class="intro-block">
+      <p class="label">Chapter 1 of 3</p>
+      <h2>Agami, redesigned for members who read little or not at all.</h2>
+      <p class="lead">An accessible version of the Agami microfinance app that leans on pictures, sound, and touch instead of text.</p>
+    </div>
+  </header>
+
+  <div class="scrolly">
+    <div class="graphic-wrap"><div class="graphic">
+      <div class="fit"><div class="phone">
+        <span class="buzz l"></span><span class="buzz r"></span>
+        <div class="screen-area">
+          <div class="island"></div>
+          <div class="statusbar"><span class="bn">৯:৪১</span><span class="icons">
+            <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".75" y=".75" width="20.5" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="2.5" width="14" height="7" rx="1.5"/><rect x="22.5" y="4" width="2" height="4" rx="1"/></svg>
+          </span></div>
+
+          <!-- 1: the current, text-heavy experience -->
+          <div class="screen s-before" data-show="1">
+            <div class="bar-title">Loan Account Statement</div>
+            <p class="tiny">Member ID: 0214-7738-12 &nbsp;|&nbsp; Branch Code: 1147 &nbsp;|&nbsp; VO No: 06 &nbsp;|&nbsp; Product: General Loan (Cycle 3)</p>
+            <table>
+              <tr><td>Disbursed Amount</td><td>25,000.00</td></tr>
+              <tr><td>Instalment Size</td><td>1,250.00</td></tr>
+              <tr><td>Instalments Paid</td><td>8 of 20</td></tr>
+              <tr><td>Outstanding Balance</td><td>15,000.00</td></tr>
+              <tr><td>Next Due Date</td><td>15/10</td></tr>
+              <tr><td>Overdue Amount</td><td>0.00</td></tr>
+              <tr><td>DPS Balance</td><td>12,000.00</td></tr>
+            </table>
+            <p class="fine">Please verify outstanding principal and service charge before making repayment. Contact your credit officer regarding any discrepancy in the instalment schedule, savings adjustment or DPS maturity terms. Terms and conditions apply.</p>
+            <div class="btnrow"><span>Statement</span><span>Repayment</span><span>Settings</span></div>
+            <span class="qm q1" aria-hidden="true">?</span><span class="qm q2" aria-hidden="true">?</span><span class="qm q3" aria-hidden="true">?</span>
+          </div>
+
+          <!-- 2: onboarding — the real app's first-login screen -->
+          <div class="screen s-tier" data-show="2">
+            <svg class="onb-mascot" width="70" height="70" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M20 55 Q50 20 80 55 L84 95 L16 95 Z" fill="#E8A324"/>
+              <circle cx="50" cy="42" r="24" fill="#FBE2ED"/>
+              <path d="M26 40 Q50 15 74 40 Q74 30 50 24 Q26 30 26 40Z" fill="#D6006F"/>
+              <circle cx="41" cy="44" r="3.2" fill="#2B211E"/><circle cx="59" cy="44" r="3.2" fill="#2B211E"/>
+              <path d="M40 54 Q50 62 60 54" stroke="#2B211E" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div class="onb-bubble">আমি আপনাকে সাহায্য করব। বলুন, আপনি এই ধরনের অ্যাপ আগে কতটা ব্যবহার করেছেন?</div>
+            <div class="onb-card picked"><span class="n-icon" style="background:#FBEDD2">🌱</span><b>নতুন — ধাপে ধাপে শেখান</b></div>
+            <div class="onb-card"><span class="n-icon" style="background:#DCEFEE">🙂</span><b>কিছুটা জানি</b></div>
+            <div class="onb-card"><span class="n-icon" style="background:#DCEEE2">⚡</span><b>নিয়মিত ব্যবহার করি</b></div>
+            <p class="onb-note">এটি পরে ⚙ আইকন থেকে যেকোনো সময় বদলানো যাবে।</p>
+          </div>
+
+          <!-- 3: mobile number — step 1 of the real 3-step login -->
+          <div class="screen s-login" data-show="3">
+            <div class="progdots"><span class="progdot on"></span><span class="progdot"></span><span class="progdot"></span></div>
+            <div class="banner-emoji">📱</div>
+            <div class="stitle">আপনার মোবাইল নম্বর দিন</div>
+            <span class="spk" style="margin:0 auto 14px"><svg class="ico"><use href="#i-spk"/></svg></span>
+            <div class="display-box">০১৭১২৩৪৫৬৭৮</div>
+            <div class="keypad">
+              <span class="k">১</span><span class="k">২</span><span class="k">৩</span>
+              <span class="k">৪</span><span class="k">৫</span><span class="k">৬</span>
+              <span class="k">৭</span><span class="k">৮</span><span class="k">৯</span>
+              <span class="k blank"></span><span class="k">০</span><span class="k del">⌫</span>
+            </div>
+            <div class="nextcircle">➜</div>
+          </div>
+
+          <!-- 4: OTP — step 2, same masked-dot pattern the real app reuses for OTP and PIN -->
+          <div class="screen s-otp" data-show="4">
+            <div class="progdots"><span class="progdot on"></span><span class="progdot on"></span><span class="progdot"></span></div>
+            <div class="protonote">প্রোটোটাইপ মোড – প্রকৃত OTP পাঠানো হচ্ছে না। যেকোনো ৪ সংখ্যা দিন।</div>
+            <div class="banner-emoji">🔢</div>
+            <div class="stitle">OTP নম্বরটি দিন</div>
+            <span class="spk" style="margin:0 auto 14px"><svg class="ico"><use href="#i-spk"/></svg></span>
+            <div class="dots"><i data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i><div class="ok"><svg class="ico"><use href="#i-check"/></svg></div></div>
+            <div class="keypad">
+              <span class="k">১</span><span class="k">২</span><span class="k">৩</span>
+              <span class="k">৪</span><span class="k">৫</span><span class="k">৬</span>
+              <span class="k">৭</span><span class="k">৮</span><span class="k">৯</span>
+              <span class="k blank"></span><span class="k">০</span><span class="k del">⌫</span>
+            </div>
+            <div class="nextcircle">➜</div>
+          </div>
+
+          <!-- 5: PIN — step 3, never spoken aloud, no next button (auto-advances on the 4th digit) -->
+          <div class="screen s-pin" data-show="5">
+            <div class="progdots"><span class="progdot on"></span><span class="progdot on"></span><span class="progdot on"></span></div>
+            <div class="banner-emoji">🔒</div>
+            <div class="stitle">আপনার গোপন পিন দিন</div>
+            <div class="dots"><i data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i><div class="ok"><svg class="ico"><use href="#i-check"/></svg></div></div>
+            <div class="keypad">
+              <span class="k">১</span><span class="k">২</span><span class="k">৩</span>
+              <span class="k">৪</span><span class="k">৫</span><span class="k">৬</span>
+              <span class="k">৭</span><span class="k">৮</span><span class="k">৯</span>
+              <span class="k blank"></span><span class="k">০</span><span class="k del">⌫</span>
+            </div>
+          </div>
+
+          <!-- 6: Novice dashboard — a stacked list of 4 cards, not a grid -->
+          <div class="screen s-home" data-show="6">
+            <p class="stitle" style="margin-top:2px">নিচের যেকোনো একটি বেছে নিন</p>
+            <div class="nlist">
+              <div class="ncard cat-loan" style="--i:0"><span class="n-icon">🤲</span><b>আমার ঋণ</b><span class="n-audio"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+              <div class="ncard cat-savings" style="--i:1"><span class="n-icon">🏺</span><b>আমার সঞ্চয়</b><span class="n-audio"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+              <div class="ncard cat-special" style="--i:2"><span class="n-icon">🎗️</span><b>বিশেষ সঞ্চয় (ডিপিএস)</b><span class="n-audio"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+              <div class="ncard cat-insurance" style="--i:3"><span class="n-icon">☂️</span><b>আমার বীমা</b><span class="n-audio"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+            </div>
+          </div>
+
+          <!-- 7: loan detail — the real app's paged card, one field at a time -->
+          <div class="screen s-loan" data-show="7">
+            <div class="topbar"><span class="back"><svg class="ico"><use href="#i-back"/></svg></span><b>দাবি সাধারণ ঋণ</b><span class="spk"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+            <div class="pgcard">
+              <div class="pglabel">মোট বকেয়া</div>
+              <div class="pgvalue">৳১৫,০০০</div>
+              <div class="pgarrows"><span class="pgarrow">‹</span><span class="pgarrow">›</span></div>
+              <div class="pgdots"><i class="on"></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+
+          <!-- 8: special savings (DPS) detail — same paged-card pattern, teal category -->
+          <div class="screen s-save" data-show="8">
+            <div class="topbar"><span class="back"><svg class="ico"><use href="#i-back"/></svg></span><b>বিশেষ সঞ্চয়ী হিসাব (ডিপিএস)</b><span class="spk"><svg class="ico"><use href="#i-spk"/></svg></span></div>
+            <div class="pgcard">
+              <div class="pglabel">মাসিক কিস্তি</div>
+              <div class="pgvalue">৳৫০০</div>
+              <div class="pgsub">মেয়াদপূর্তির তারিখ: ডিসেম্বর ২০২৭</div>
+              <div class="pgarrows"><span class="pgarrow">‹</span><span class="pgarrow">›</span></div>
+              <div class="pgdots"><i></i><i></i><i class="on"></i><i></i></div>
+            </div>
+          </div>
+
+          <!-- LIVE PROTOTYPE: to show your real Agami prototype inside this phone,
+               1) put agami.html in the same folder as this file,
+               2) add this screen here:
+                  <div class="screen live" data-show="9"><iframe src="agami.html" title="Agami prototype"></iframe></div>
+               3) add a 9th step at the end of the Agami steps above, with data-step="9" and data-stop.
+               Tip: after tapping inside the prototype, click outside the phone before using the clicker again. -->
+        </div>
+      </div></div>
+    </div></div>
+
+    <div class="steps">
+      <article class="step" data-step="1" data-stop><div class="step-card">
+        <p class="count">1 of 8</p>
+        <h3>Improving accessibility.</h3>
+        <p>Most apps assume the user reads comfortably. Many users in rural Bangladesh don't, so a screen like this tells them very little.</p>
+      </div></article>
+      <article class="step" data-step="2" data-stop><div class="step-card">
+        <p class="count">2 of 8</p>
+        <h3>Three tiers of Adaptive UI</h3>
+        <p>A mascot greets first-time members and asks how comfortable they are with apps like this. Their answer sets a starting tier, and the app quietly nudges them up after a run of easy sessions, or back down after repeated trouble.</p>
+      </div></article>
+      <article class="step" data-step="3" data-stop><div class="step-card">
+        <p class="count">3 of 8</p>
+        <h3>One field, one screen, one step at a time.</h3>
+        <p>Mobile number, then a one-time code, then a PIN — three separate screens rather than one crowded form, so nobody loses track of what they've already entered.</p>
+      </div></article>
+      <article class="step" data-step="4" data-stop><div class="step-card">
+        <p class="count">4 of 8</p>
+        <h3>A one-time code confirms the number.</h3>
+        <p>Same big keypad, same masked-dot pattern as the PIN screen that follows — one visual language carried through the whole login.</p>
+      </div></article>
+      <article class="step" data-step="5" data-stop><div class="step-card">
+        <p class="count">5 of 8</p>
+        <h3>A PIN that is never spoken and is always private.</h3>
+        <p>Each digit is confirmed with a filling dot and a short vibration.</p>
+      </div></article>
+      <article class="step" data-step="6" data-stop><div class="step-card">
+        <p class="count">6 of 8</p>
+        <h3>Four choices, stacked, not gridded.</h3>
+        <p>A first-time member sees loan, savings, special savings, and insurance as one simple list — a big icon, a label, and its own listen button on each, colour-coded but never colour alone.</p>
+      </div></article>
+      <article class="step" data-step="7" data-stop><div class="step-card">
+        <p class="count">7 of 8</p>
+        <h3>One fact at a time.</h3>
+        <p>Account details page through a single field, with arrows and dots to move between them — nothing to scroll past, nothing to misread.</p>
+        <p class="note">All figures on these screens are sample data.</p>
+      </div></article>
+      <article class="step" data-step="8" data-stop><div class="step-card">
+        <p class="count">8 of 8</p>
+        <h3>Same pattern, every account.</h3>
+        <p>Special savings (DPS) uses the identical paged layout, just in its own teal — one consistent design followed through loan, savings, DPS, and insurance alike.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CHAPTER 2: VOICE ASSISTANT ======================= -->
+<section class="chapter" id="voice" data-theme="voice">
+  <header class="chapter-intro" data-stop>
+    <div class="chapter-num" aria-hidden="true">২</div>
+    <div class="intro-block">
+      <p class="label">Chapter 2 of 3</p>
+      <h2>A voice assistant that listens and speaks in Bengali.</h2>
+      <p class="lead">Members ask questions out loud and hear the answer back, grounded in BRAC's own documents through retrieval-augmented generation (RAG).</p>
+    </div>
+  </header>
+
+  <div class="scrolly">
+    <div class="graphic-wrap"><div class="graphic" id="voiceGraphic">
+      <div class="fit"><div class="v-stage">
+        <div class="bubble v-q" data-show="2 3 4 5"><span class="who">Member</span><span class="bn">ডিপিএস কী? এটা কীভাবে কাজ করে?</span></div>
+
+        <div class="orb-wrap" id="orbWrap">
+          <div class="orb-spin"></div>
+          <div class="orb"><div class="orb-core"></div></div>
+        </div>
+
+        <div class="v-state" aria-live="polite">
+          <span data-show="1 5"><i></i>Idle <b>অপেক্ষা</b></span>
+          <span data-show="2"><i></i>Listening <b>শুনছি</b></span>
+          <span data-show="3"><i></i>Thinking <b>খুঁজছি</b></span>
+          <span data-show="4"><i></i>Speaking <b>বলছি</b></span>
+        </div>
+
+        <div class="v-slot">
+          <div class="v-docs" data-show="3">
+            <span><svg class="ico"><use href="#i-doc"/></svg>সঞ্চয় নির্দেশিকা</span>
+            <span><svg class="ico"><use href="#i-doc"/></svg>ডিপিএস নিয়মাবলি</span>
+            <span><svg class="ico"><use href="#i-doc"/></svg>সাধারণ প্রশ্নোত্তর</span>
+          </div>
+          <div class="bubble v-a" data-show="4"><span class="who">Assistant</span><span class="bn">ডিপিএস একটি মাসিক সঞ্চয় স্কিম। প্রতি মাসে নির্দিষ্ট টাকা জমা দিলে মেয়াদ শেষে মুনাফাসহ পুরো টাকা ফেরত পাবেন।</span></div>
+          <div class="v-stack" data-show="5">
+            <span>Gemini Live API <code>gemini-3.1-flash-live-preview</code></span>
+            <span>FastAPI</span><span>WebSocket audio</span><span>RAG retrieval</span><span>Bengali speech in and out</span>
+          </div>
+          <!-- DEMO RECORDING: to play your screen recording, add a 6th step (data-step="6" data-stop) and put this here:
+               <div data-show="6"><video src="voice-demo.mp4" controls style="width:520px;border-radius:14px"></video></div>
+               Move the orb out of the way for that step if the video needs more room. -->
+        </div>
+
+        <div class="pipe">
+          <div class="node" data-show="2 3 4 5"><span class="ic"><svg class="ico"><use href="#i-mic"/></svg></span>Voice in</div>
+          <div class="conn" data-show="2 3 4 5"></div>
+          <div class="node" data-show="2 3 4 5"><span class="ic"><svg class="ico"><use href="#i-stream"/></svg></span>WebSocket</div>
+          <div class="conn" data-show="2 3 4 5"></div>
+          <div class="node" data-show="2 3 4 5"><span class="ic"><svg class="ico"><use href="#i-server"/></svg></span>FastAPI</div>
+          <div class="conn" data-show="3 4 5"></div>
+          <div class="node" data-show="3 4 5"><span class="ic"><svg class="ico"><use href="#i-doc"/></svg></span>Knowledge base</div>
+          <div class="conn" data-show="4 5"></div>
+          <div class="node" data-show="4 5"><span class="ic"><svg class="ico"><use href="#i-spark"/></svg></span>Gemini Live</div>
+          <div class="conn" data-show="4 5"></div>
+          <div class="node" data-show="4 5"><span class="ic"><svg class="ico"><use href="#i-spk"/></svg></span>Voice out</div>
+        </div>
+      </div></div>
+    </div></div>
+
+    <div class="steps">
+      <article class="step" data-step="1" data-stop><div class="step-card">
+        <p class="count">1 of 5</p>
+        <h3>The orb shows what the assistant is doing.</h3>
+        <p>It has four states: idle, listening, thinking, and speaking. A member can follow along without reading a single word.</p>
+      </div></article>
+      <article class="step" data-step="2" data-stop><div class="step-card">
+        <p class="count">2 of 5</p>
+        <h3>A member asks, in Bengali.</h3>
+        <p>Their voice streams live over a WebSocket to a FastAPI server. The ring around the orb moves with their voice, so they know they're being heard.</p>
+      </div></article>
+      <article class="step" data-step="3" data-stop><div class="step-card">
+        <p class="count">3 of 5</p>
+        <h3>It checks BRAC's documents first.</h3>
+        <p>Before answering, the system retrieves the most relevant passages from the knowledge base. Answers come from approved material rather than the model's guesswork.</p>
+      </div></article>
+      <article class="step" data-step="4" data-stop><div class="step-card">
+        <p class="count">4 of 5</p>
+        <h3>The answer comes back as speech.</h3>
+        <p>The Gemini Live API turns the retrieved information into a natural spoken reply in Bengali, streamed back in real time.</p>
+      </div></article>
+      <article class="step" data-step="5" data-stop><div class="step-card">
+        <p class="count">5 of 5</p>
+        <h3>Voice in, grounded answer out.</h3>
+        <p>That pipeline is the whole system, from microphone to speaker. The recorded demo shows it running end to end.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CHAPTER 3: PROJECT MANAGER ======================= -->
+<section class="chapter" id="pm" data-theme="pm">
+  <header class="chapter-intro" data-stop>
+    <div class="chapter-num" aria-hidden="true">৩</div>
+    <div class="intro-block">
+      <p class="label">Chapter 3 of 3</p>
+      <h2>An AI assistant for planning and signing off projects.</h2>
+      <p class="lead">A short interview becomes a chain of approved documents, drafted by a local AI model and signed off by the team, with nothing ever silently overwritten.</p>
+      <span class="badge">Working demo</span>
+    </div>
+  </header>
+
+  <div class="scrolly">
+    <div class="graphic-wrap"><div class="graphic">
+      <div class="fit"><div class="pm-stage">
+
+        <!-- 1: six-question interview -->
+        <div class="pm-layer pm-q" data-show="1">
+          <div class="pcard qcard">
+            <div class="qhead"><span>Stakeholder Q&amp;A</span><span>Question 4 of 6</span></div>
+            <h4>What does this system replace or connect to?</h4>
+            <div class="qnav">
+              <span class="arrow"><svg class="ico"><use href="#i-back"/></svg></span>
+              <span class="field">Paper visit logs, kept at the branch</span>
+              <span class="arrow" style="transform:scaleX(-1)"><svg class="ico"><use href="#i-back"/></svg></span>
+            </div>
+          </div>
+          <div class="qdots">
+            <span class="qdot answered">✓</span><span class="qdot answered">✓</span><span class="qdot answered">✓</span>
+            <span class="qdot current">4</span><span class="qdot">5</span><span class="qdot">6</span>
+          </div>
+          <p class="qfoot">Any team member can go back and revise an answer, or leave one blank, right up until <b>Done with Q&amp;A</b> locks the set in.</p>
+          <span class="qdone">Done with Q&amp;A</span>
+        </div>
+
+        <!-- 2: documents drafted in order -->
+        <div class="pm-layer pm-docs" data-show="2">
+          <div class="docs-head"><span class="pulse"></span>Drafting from the Q&amp;A and everything approved so far</div>
+          <div class="docgrid">
+            <div class="pcard doc" style="--i:0"><span class="n">1</span><span class="tag">Charter</span><b>Project charter</b><i></i><i></i><i class="s"></i><em>Approved</em></div>
+            <div class="pcard doc" style="--i:1"><span class="n">2</span><span class="tag">BRD</span><b>Business requirements</b><i></i><i></i><i class="s"></i><em>Approved</em></div>
+            <div class="pcard doc" style="--i:2"><span class="n">3</span><span class="tag">SRS</span><b>Software requirements</b><i></i><i></i><i class="s"></i><em>Awaiting signatures</em></div>
+            <div class="pcard doc" style="--i:3"><span class="n">4</span><span class="tag">WBS</span><b>Work breakdown</b><i></i><i></i><i class="s"></i><em>Not started</em></div>
+          </div>
+          <p class="docs-foot">One AI call per document — deliberately kept to a single fast pass so it still runs on modest, low-spec hardware.</p>
+        </div>
+
+        <!-- 3: dual-signature approval -->
+        <div class="pm-layer pm-sign" data-show="3">
+          <div class="pcard sheet">
+            <div class="sheet-top"><span class="tag">SRS</span><b>Software requirements</b><span class="ver">v3</span></div>
+            <i></i><i></i><i class="s"></i>
+            <div class="req">FR-06: Record a field visit offline, sync later</div>
+            <i></i><i class="s"></i><i></i>
+            <div class="siglist">
+              <div class="sigrow done"><span class="av">K</span><div><b>Kamal · Tier 1</b><small>Signed</small></div><span class="st">✓</span></div>
+              <div class="sigrow"><span class="av">T</span><div><b>Tasnim · Tier 2</b><small>Awaiting signature</small></div><span class="st">Pending</span></div>
+            </div>
+            <div class="stamp">Locked</div>
+          </div>
+          <div class="comment"><span class="who">On this document</span>Add offline mode. Field staff often lose signal.</div>
+        </div>
+
+        <!-- 4: version history and restart -->
+        <div class="pm-layer pm-version" data-show="4">
+          <div class="vh-head"><b>SRS · version history</b><span>Nothing is ever deleted</span></div>
+          <div class="vlist">
+            <div class="vrow" style="--i:0"><b>v1<span class="tag">AI generated</span></b><small>First draft from the BRD</small></div>
+            <div class="vrow" style="--i:1"><b>v2<span class="tag">Manual edit</span></b><small>Rezaul added an offline-sync requirement</small></div>
+            <div class="vrow restart" style="--i:2"><b>Restart<span class="tag">Reopened</span></b><small>An approver reopened this stage — later stages reset to Not started, nothing lost</small></div>
+            <div class="vrow current" style="--i:3"><b>v3 · current<span class="tag">AI regenerated</span></b><small>Rewritten with a custom instruction, awaiting signatures</small></div>
+          </div>
+        </div>
+
+        <!-- 5: live collaboration -->
+        <div class="pm-layer pm-live" data-show="5">
+          <h4 class="live-head">Project comments</h4>
+          <div class="live-status"><span class="pulse"></span>Tasnim is regenerating the SRS right now</div>
+          <div class="clist">
+            <div class="crow" style="--i:0"><span class="who">Rezaul</span><span class="when">Tue 10:02</span><p>Can we confirm the field team is fine with the offline flow before we lock the BRD?</p></div>
+            <div class="crow" style="--i:1"><span class="who">Kamal</span><span class="when">Tue 10:20</span><p>Confirmed with the branch — go ahead.</p></div>
+          </div>
+        </div>
+
+      </div></div>
+    </div></div>
+
+    <div class="steps">
+      <article class="step" data-step="1" data-stop><div class="step-card">
+        <p class="count">1 of 5</p>
+        <h3>A five-minute interview instead of a form.</h3>
+        <p>Six fixed questions gather what the AI needs to draft the first document. Any team member can revise or skip an answer, right up until it's locked in.</p>
+      </div></article>
+      <article class="step" data-step="2" data-stop><div class="step-card">
+        <p class="count">2 of 5</p>
+        <h3>One document at a time, each building on the last.</h3>
+        <p>Charter, then BRD, then SRS, then WBS — drafted in order by a local AI model, each using everything approved so far.</p>
+      </div></article>
+      <article class="step" data-step="3" data-stop><div class="step-card">
+        <p class="count">3 of 5</p>
+        <h3>Nothing ships without two signatures.</h3>
+        <p>A Tier 1 and a Tier 2 approver each sign with their own digital signature before a document locks and work can move on.</p>
+      </div></article>
+      <article class="step" data-step="4" data-stop><div class="step-card">
+        <p class="count">4 of 5</p>
+        <h3>Every version survives.</h3>
+        <p>Edits, AI rewrites, even reopening an approved document with Restart — nothing is ever deleted. The full history stays one click away.</p>
+      </div></article>
+      <article class="step" data-step="5" data-stop><div class="step-card">
+        <p class="count">5 of 5</p>
+        <h3>The team sees the same thing, live.</h3>
+        <p>Comments on the whole project or on one document, plus a live status so nobody double-triggers a generation or overwrites a teammate's edit.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const body = document.body;
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+  /* ---------- Orb meter bars ---------- */
+  const orbWrap = document.getElementById('orbWrap');
+  const BAR_N = 44;
+  const bars = [];
+  for (let i = 0; i < BAR_N; i++) {
+    const b = document.createElement('i');
+    b.className = 'bar';
+    b.style.setProperty('--a', (i * 360 / BAR_N) + 'deg');
+    orbWrap.prepend(b);
+    bars.push(b);
+  }
+
+  /* ---------- Scrollytelling state ---------- */
+  const scrollies = $$('.scrolly').map(el => ({
+    el,
+    graphic: el.querySelector('.graphic'),
+    steps: $$('.step', el),
+    shows: $$('[data-show]', el),
+    state: null
+  }));
+
+  function setState(s, n) {
+    if (s.state === n) return;
+    s.state = n;
+    s.graphic.dataset.state = n;
+    s.steps.forEach(st => st.classList.toggle('is-active', st.dataset.step === n));
+    s.shows.forEach(x => x.classList.toggle('on', x.dataset.show.split(' ').includes(n)));
+  }
+
+  const themed = $$('section[data-theme]');
+  const railLinks = $$('.rail a');
+  const reveals = $$('.intro-block');
+  const nums = $$('.chapter-num');
+  const heroInner = document.querySelector('.hero-inner');
+  const progress = document.querySelector('.progress');
+
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const H = innerHeight, mid = H / 2;
+
+    for (const s of scrollies) {
+      const r = s.el.getBoundingClientRect();
+      if (r.bottom <= 0 || r.top >= H * 0.6) { setState(s, '0'); continue; }
+      let n = null;
+      for (const st of s.steps) {
+        const q = st.getBoundingClientRect();
+        if (q.top <= mid && q.bottom > mid) { n = st.dataset.step; break; }
+      }
+      if (n === null) {
+        const first = s.steps[0], last = s.steps[s.steps.length - 1];
+        if (first.getBoundingClientRect().top > mid) n = first.dataset.step;
+        else if (last.getBoundingClientRect().bottom <= mid) n = last.dataset.step;
+        else n = s.state;
+      }
+      setState(s, n);
+    }
+
+    let current = null;
+    for (const sec of themed) {
+      const q = sec.getBoundingClientRect();
+      if (q.top <= mid && q.bottom > mid) { current = sec; break; }
+    }
+    if (current) {
+      if (body.dataset.theme !== current.dataset.theme) body.dataset.theme = current.dataset.theme;
+      railLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+    }
+
+    const max = document.documentElement.scrollHeight - H;
+    progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')';
+
+    for (const el of reveals) {
+      const q = el.getBoundingClientRect();
+      el.classList.toggle('in', q.top < H * 0.85 && q.bottom > H * 0.1);
+    }
+
+    if (!reduced) {
+      const p = Math.min(1, scrollY / H);
+      heroInner.style.transform = 'translateY(' + (-p * 90).toFixed(1) + 'px)';
+      heroInner.style.opacity = String(Math.max(0, 1 - p * 1.1));
+      for (const n of nums) {
+        const q = n.parentElement.getBoundingClientRect();
+        n.style.setProperty('--py', ((q.top + q.height / 2 - mid) * -0.3).toFixed(1) + 'px');
+      }
+    }
+  }
+  function requestUpdate() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', requestUpdate, { passive: true });
+
+  /* ---------- Scale each graphic to fit the screen ---------- */
+  const fits = $$('.fit');
+  function fit() {
+    const mobile = innerWidth <= 860;
+    for (const f of fits) {
+      const box = f.parentElement;
+      const s = Math.min(1.15,
+        (box.clientWidth * 0.94) / f.offsetWidth,
+        (box.clientHeight * (mobile ? 0.98 : 0.9)) / f.offsetHeight);
+      f.style.transform = 'translate(-50%,-50%) scale(' + s.toFixed(3) + ')';
+    }
+  }
+  addEventListener('resize', () => { fit(); requestUpdate(); });
+
+  /* ---------- Keyboard and presentation-clicker navigation ---------- */
+  const stops = $$('[data-stop]');
+  function targets() {
+    const H = innerHeight, max = document.documentElement.scrollHeight - H;
+    const list = stops.map(el => {
+      const r = el.getBoundingClientRect();
+      const top = scrollY + r.top;
+      const t = r.height <= H ? top + (r.height - H) / 2 : top;
+      return Math.round(Math.max(0, Math.min(max, t)));
+    });
+    return [...new Set(list)].sort((a, b) => a - b);
+  }
+  let navBase = null, navTime = 0;
+  function go(dir) {
+    const list = targets();
+    const base = (performance.now() - navTime < 900 && navBase !== null) ? navBase : scrollY;
+    let t;
+    if (dir === 'next') t = list.find(v => v > base + 4);
+    else if (dir === 'prev') t = [...list].reverse().find(v => v < base - 4);
+    else if (dir === 'home') t = 0;
+    else if (dir === 'end') t = list[list.length - 1];
+    if (t === undefined) return;
+    navBase = t; navTime = performance.now();
+    scrollTo({ top: t, behavior: reduced ? 'auto' : 'smooth' });
+  }
+
+  const hint = document.querySelector('.keyhint');
+  const blackout = document.querySelector('.blackout');
+  addEventListener('keydown', e => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
+    const k = e.key;
+    if (k === 'b' || k === 'B' || k === '.') { blackout.classList.toggle('on'); e.preventDefault(); return; }
+    if (k === 'Escape') { blackout.classList.remove('on'); return; }
+    let act = null;
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) act = 'next';
+    else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp' || (k === ' ' && e.shiftKey)) act = 'prev';
+    else if (k === 'Home') act = 'home';
+    else if (k === 'End') act = 'end';
+    if (!act) return;
+    e.preventDefault();
+    blackout.classList.remove('on');
+    hint.classList.add('hide');
+    go(act);
+  });
+  blackout.addEventListener('click', () => blackout.classList.remove('on'));
+
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    scrollTo({ top: scrollY + target.getBoundingClientRect().top, behavior: reduced ? 'auto' : 'smooth' });
+  }));
+
+  /* ---------- Simulated audio metering for the orb ---------- */
+  const voiceGraphic = document.getElementById('voiceGraphic');
+  const voiceSection = document.getElementById('voice');
+  const levels = new Float32Array(BAR_N);
+  let amp = 0;
+  function meter(t) {
+    const r = voiceSection.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight) {
+      const st = voiceGraphic.dataset.state, sec = t / 1000;
+      let target = 0.05;
+      if (st === '2' || st === '4') {
+        const rate = st === '4' ? 8.5 : 6.2;
+        const syllable = Math.pow(Math.max(0, Math.sin(sec * rate) * Math.sin(sec * rate * 0.37 + 1.2)), 0.6);
+        const phrase = Math.sin(sec * 0.9) > -0.55 ? 1 : 0.2;
+        target = 0.12 + 0.88 * syllable * phrase;
+      } else if (st === '3') {
+        target = 0.1;
+      }
+      amp += (target - amp) * 0.2;
+      for (let i = 0; i < BAR_N; i++) {
+        const n = 0.5 + 0.5 * Math.sin(sec * 5.3 + i * 1.7) * Math.cos(sec * 3.1 - i * 0.9);
+        const v = 0.14 + amp * (0.35 + 1.1 * n);
+        levels[i] += (v - levels[i]) * 0.35;
+        bars[i].style.setProperty('--h', levels[i].toFixed(3));
+      }
+      orbWrap.style.setProperty('--amp', amp.toFixed(3));
+    }
+    requestAnimationFrame(meter);
+  }
+  if (reduced) bars.forEach(b => b.style.setProperty('--h', '.35'));
+  else requestAnimationFrame(meter);
+
+  fit();
+  update();
+  addEventListener('load', () => { fit(); update(); });
+})();
+</script>
+</body>
+</html>
