@@ -18,8 +18,6 @@ Opening `index.html` directly also works, but the live apps behave best through 
    chapter 4 shows a screenshot instead and says so. Press **Reload** on that slide once it's up.
 3. **Sign in to the Field Visit Tracker** on the last slide of chapter 5: press **Expand**, sign in with a
    management account (the map is in the management view), then press **Esc**. The sign-in is remembered.
-4. **Optional:** save a recording of the local assistant as `assets/local-demo.mp4`. It then appears on the
-   last slide of chapter 3. Without it, that slide shows the status board alone.
 
 ## Keys
 

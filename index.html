@@ -15,13 +15,11 @@
   - After clicking inside a live app, click anywhere outside it to get the keys back.
   - The dots at the top right show whether each live app is awake. The page wakes the free
     Render servers as soon as it opens and keeps them awake while it stays open.
-  - Optional: put a recording of the local assistant at assets/local-demo.mp4 and it appears
-    as the last step of chapter 3. Without the file, that step shows the status board alone.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="assets/showcase.css?v=5">
+<link rel="stylesheet" href="assets/showcase.css?v=7">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23E6007E'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3EA%3C/text%3E%3C/svg%3E">
 </head>
 <body data-theme="intro" class="at-top">
@@ -79,23 +77,23 @@
   <div class="mosaic" role="list">
     <button class="tile t1" style="--i:0" data-jump="agami" role="listitem">
       <div class="t-art"><img src="assets/agami/brand-dashboards-3.webp" alt=""></div>
-      <span class="t-n">১ · Deep dive</span><h3>Accessible Agami</h3>
+      <span class="t-n">১</span><h3>Accessible Agami</h3>
     </button>
     <button class="tile t2" style="--i:1" data-jump="voice" role="listitem">
       <div class="t-art"><canvas data-orb="mini" width="300" height="300"></canvas></div>
-      <span class="t-n">২ · Deep dive</span><h3>Voice assistant, in the cloud</h3>
+      <span class="t-n">২</span><h3>Voice assistant, in the cloud</h3>
     </button>
     <button class="tile t3" style="--i:2" data-jump="local" role="listitem">
       <div class="t-art mini-pipe"><span style="--j:0"></span><span style="--j:1"></span><span style="--j:2"></span><span style="--j:3"></span><span style="--j:4"></span><span style="--j:5"></span></div>
-      <span class="t-n">৩ · Deep dive</span><h3>Voice assistant, fully local</h3>
+      <span class="t-n">৩</span><h3>Voice assistant, fully local</h3>
     </button>
     <button class="tile t4" style="--i:3" data-jump="pm" role="listitem">
       <div class="t-art mini-docs"><b class="ok">Q&amp;A</b><b class="ok">CH</b><b class="ok">BRD</b><b>SRS</b><b>WBS</b></div>
-      <span class="t-n">৪ · A glance</span><h3>AI project manager</h3>
+      <span class="t-n">৪</span><h3>AI project manager</h3>
     </button>
     <button class="tile t5" style="--i:4" data-jump="field" role="listitem">
       <div class="t-art"><svg data-minimap viewBox="0 0 600 842" aria-hidden="true"></svg></div>
-      <span class="t-n">৫ · A glance</span><h3>Field Visit Tracker</h3>
+      <span class="t-n">৫</span><h3>Field Visit Tracker</h3>
     </button>
   </div>
 </section>
@@ -106,14 +104,13 @@
 <section class="chapter" id="agami" data-theme="agami" data-chapter="agami" data-label="Accessible Agami">
   <header class="ch-intro" data-stop>
     <div class="big-n" aria-hidden="true">১</div>
-    <p class="kicker">Chapter 1 <span class="tag">Deep dive · 1 of 3</span></p>
+    <p class="kicker">Chapter 1</p>
     <h2>Agami, rebuilt for members who read little or not at all.</h2>
     <p class="lede">An accessible, adaptive version of BRAC's Agami microfinance app. It leans on sound, pictures and numbers instead of text, adjusts itself to each member's experience, and lets anyone check that BRAC really received the money they handed over.</p>
     <div class="chips">
       <span class="chip solid">Live at accessible-agami.onrender.com</span>
       <span class="chip">Four adaptive tiers</span>
       <span class="chip">Bengali audio on every screen</span>
-      <span class="chip">Android APK + website, one codebase</span>
       <span class="chip">Built on published research</span>
     </div>
   </header>
@@ -121,9 +118,9 @@
   <div class="scrolly">
     <div class="steps">
       <article class="step" data-step="1" data-stop><div class="card">
-        <span class="idx">01 / 10 · The gap</span>
-        <h3>Most banking apps assume the user reads comfortably.</h3>
-        <p>Agami's screens are dense, English-first and full of small text. Many of the members it serves in rural Bangladesh can't use a screen like this without help.</p>
+        <span class="idx">01 / 10 · Who it's for</span>
+        <h3>For members who read little or not at all.</h3>
+        <p>Agami already serves BRAC's microfinance members. This version is designed for those in rural Bangladesh with little reading or digital experience, so they can use it on their own, without help.</p>
         <div class="stats">
           <div class="stat"><b>77%</b><span>of rural households have no or low digital skills</span></div>
           <div class="stat"><b>32.5%</b><span>of mobile-money users have shared their secret PIN with an agent or relative</span></div>
@@ -212,45 +209,24 @@
 
       <article class="step" data-step="10" data-stop><div class="card">
         <span class="idx">10 / 10 · Try it</span>
-        <h3>One codebase, shipped two ways.</h3>
-        <ul>
-          <li><b>Android APK:</b> a wrapper that gives the app the phone's Bengali voice, plays audio without a first tap, and makes Back close dialogs instead of quitting</li>
-          <li><b>Website:</b> the same files, hosted on Render</li>
-          <li><b>Research panel:</b> tap the Settings title 7 times to export a log of every task, offer and answer as CSV, for a field study</li>
-        </ul>
-        <p>The phone on the right is the live app. Scan the code to try it with the demo rules, where a tier offer appears after just four tasks.</p>
+        <h3>Try it on your phone.</h3>
+        <p>Scan to install the Android app, or to open it straight in the browser.</p>
+        <p class="note">Any mobile number and any 4-digit PIN log in.</p>
       </div></article>
     </div>
 
     <div class="stage-wrap"><div class="stage" data-stage="agami">
-      <!-- 1 · the original app -->
+      <!-- 1 · who it's for -->
       <div class="scene" data-show="1">
-        <div style="position:relative">
-          <div class="phone"><div class="screen">
-            <div class="old-app">
-              <div class="bar"><span>Loan Account Statement</span><span>9:41</span></div>
-              <div class="meta">Member ID: 0214-7738-12 | Branch Code: 1147 | VO No: 06 | Product: General Loan (Cycle 3) | Disbursement Date: 14/03/2026</div>
-              <table>
-                <tr><td>Disbursed Amount</td><td>25,000.00</td></tr>
-                <tr><td>Instalment Size</td><td>1,250.00</td></tr>
-                <tr><td>Instalments Paid</td><td>8 of 20</td></tr>
-                <tr><td>Outstanding Balance</td><td>15,000.00</td></tr>
-                <tr><td>Next Due Date</td><td>15/10</td></tr>
-                <tr><td>Overdue Amount</td><td>0.00</td></tr>
-                <tr><td>DPS Balance</td><td>12,000.00</td></tr>
-                <tr><td>Service Charge (flat)</td><td>24%</td></tr>
-              </table>
-              <p class="fine">Please verify outstanding principal and service charge before making repayment. Contact your credit officer regarding any discrepancy in the instalment schedule, savings adjustment or DPS maturity terms. Terms and conditions apply. Late repayment may affect eligibility for subsequent loan cycles.</p>
-              <p class="fine">Statement generated for informational purposes only. Figures are subject to reconciliation at branch level.</p>
-              <div class="tabs"><span>Statement</span><span>Repayment</span><span>Savings</span><span>Settings</span></div>
-            </div>
-          </div></div>
-          <span class="pain l" style="top:14%;--d:0s">English only</span>
-          <span class="pain r" style="top:36%;--d:.25s">Walls of small text</span>
-          <span class="pain l" style="top:62%;--d:.5s">Nothing to hear</span>
-          <span class="pain r" style="top:84%;--d:.75s">Tiny targets</span>
+        <div class="persona">
+          <div class="who"><img src="assets/icons/profile.svg" alt=""><div><b>The member this version is for</b><span>From the research on low-literate users</span></div></div>
+          <ul>
+            <li style="--i:0"><span class="ic">📖</span><div><b>Reads little or not at all</b><span>but recognises numbers and pictures</span></div></li>
+            <li style="--i:1"><span class="ic">🔊</span><div><b>Learns by listening</b><span>Bengali speech on every screen helps</span></div></li>
+            <li style="--i:2"><span class="ic">📱</span><div><b>Often shares a phone</b><span>with other family members</span></div></li>
+            <li style="--i:3"><span class="ic">🤝</span><div><b>Wants to manage money independently</b><span>without asking an agent or a relative</span></div></li>
+          </ul>
         </div>
-        <p class="scene-cap">A typical text-heavy statement screen (recreated, sample data)</p>
       </div>
 
       <!-- 2 · research-led login -->
@@ -376,10 +352,9 @@
         <div class="phone live-phone"><div class="screen live" data-live="agami" data-src="https://accessible-agami.onrender.com/?rules=demo" data-w="390" data-h="844">
           <div class="live-cover"><div><div class="spinner"></div>Opening the live app…<small>Free hosting can take up to a minute to wake.</small></div></div>
         </div></div>
-        <div class="side-panel">
-          <div class="qr-card"><div class="qr" data-qr="https://accessible-agami.onrender.com/?rules=demo"></div><b>Try it on your phone</b><span>accessible-agami.onrender.com</span></div>
-          <a class="btn ghost" href="https://accessible-agami.onrender.com/?rules=demo" target="_blank" rel="noopener">Open in a new tab ↗</a>
-          <p class="note">Any mobile number and any 4-digit PIN log in. Each new number starts as a new member.</p>
+        <div class="qr-pair">
+          <div class="qr-card"><div class="qr" data-qr="https://drive.google.com/file/d/1c-fnF1lPXYdFDTMyD_1hTdcl8NoGeHQH/view"></div><b>Android app (APK)</b><span>Download from Google Drive</span></div>
+          <div class="qr-card"><div class="qr" data-qr="https://accessible-agami.onrender.com/?rules=demo"></div><b>In the browser</b><span>accessible-agami.onrender.com</span></div>
         </div>
       </div>
     </div></div>
@@ -392,11 +367,11 @@
 <section class="chapter" id="voice" data-theme="voice" data-chapter="voice" data-label="Voice · Cloud">
   <header class="ch-intro" data-stop>
     <div class="big-n" aria-hidden="true">২</div>
-    <p class="kicker">Chapter 2 <span class="tag">Deep dive · 2 of 3</span></p>
+    <p class="kicker">Chapter 2</p>
     <h2>Ask out loud in Bengali. Hear an answer from BRAC's own documents.</h2>
     <p class="lede">A real-time voice assistant built on Google's Gemini Live API, with retrieval-augmented generation (RAG). It answers only from documents BRAC approves, says so when it doesn't know, and runs free on the open internet, including on phones.</p>
     <div class="chips">
-      <span class="chip solid">Live at brac-voice-assistant.onrender.com</span>
+      <button class="chip solid chip-btn" data-popup="https://brac-voice-assistant.onrender.com/">Live at brac-voice-assistant.onrender.com ↗</button>
       <span class="chip">Gemini Live · gemini-3.8-live</span>
       <span class="chip">gemini-embedding-001</span>
       <span class="chip">FastAPI + WebSocket</span>
@@ -408,7 +383,7 @@
   <div class="scrolly">
     <div class="steps">
       <article class="step" data-step="1" data-stop><div class="card">
-        <span class="idx">01 / 09 · The interface</span>
+        <span class="idx">01 / 06 · The interface</span>
         <h3>One button. Talk, don't type.</h3>
         <p>Press <b class="bn">কথা বলুন</b> ("speak") and ask. The orb shows what the assistant is doing, so the member can follow along without reading:</p>
         <ul>
@@ -420,14 +395,14 @@
       </div></article>
 
       <article class="step" data-step="2" data-stop><div class="card">
-        <span class="idx">02 / 09 · Architecture</span>
+        <span class="idx">02 / 06 · Architecture</span>
         <h3>The path of one question.</h3>
         <p>The browser records the microphone at 16 kHz and streams it over a WebSocket to a FastAPI server, which relays it to the Gemini Live API. Gemini's spoken reply streams back the same way and plays as it arrives, at 24 kHz.</p>
         <p>Because it streams in both directions, the assistant starts speaking without waiting for a whole answer to be written first.</p>
       </div></article>
 
       <article class="step" data-step="3" data-stop><div class="card">
-        <span class="idx">03 / 09 · Grounding</span>
+        <span class="idx">03 / 06 · Grounding</span>
         <h3>It has to look things up first.</h3>
         <p>Gemini gets exactly one tool: <code>search_knowledge_base</code>. Its instructions begin:</p>
         <div class="quote">"You have no knowledge of your own. Every factual statement you make must come from a passage returned by the search tool."</div>
@@ -435,7 +410,7 @@
       </div></article>
 
       <article class="step" data-step="4" data-stop><div class="card">
-        <span class="idx">04 / 09 · Retrieval</span>
+        <span class="idx">04 / 06 · Retrieval</span>
         <h3>Hybrid search, tuned for Bengali.</h3>
         <p>Documents are split by heading into passages of about 900 characters. Each question is scored against every passage in two ways:</p>
         <ul>
@@ -446,7 +421,7 @@
       </div></article>
 
       <article class="step" data-step="5" data-stop><div class="card">
-        <span class="idx">05 / 09 · Honesty</span>
+        <span class="idx">05 / 06 · Honesty</span>
         <h3>When it doesn't know, it says so.</h3>
         <p>If nothing relevant comes back, it doesn't guess:</p>
         <div class="quote bn" style="font-size:19px">দুঃখিত, এই বিষয়ে আমার কাছে তথ্য নেই।</div>
@@ -454,7 +429,7 @@
       </div></article>
 
       <article class="step" data-step="6" data-stop><div class="card">
-        <span class="idx">06 / 09 · No code needed</span>
+        <span class="idx">06 / 06 · No code needed</span>
         <h3>Admins run it from a panel.</h3>
         <ul>
           <li>Choose from 8 Gemini voices, switch the voice model, and set how strict the search is and how many passages are sent</li>
@@ -462,31 +437,6 @@
           <li>Change the Gemini API key from the panel</li>
         </ul>
         <p class="note">Settings apply from the next conversation: a live voice session's setup is fixed when it connects.</p>
-      </div></article>
-
-      <article class="step" data-step="7" data-stop><div class="card">
-        <span class="idx">07 / 09 · Deployment</span>
-        <h3>From my laptop to the open internet, for free.</h3>
-        <p>Phones only allow the microphone over HTTPS, and the audio needs a long-lived WebSocket. Render's free tier provides both. To get there:</p>
-        <ul>
-          <li>One server on one port; secrets in environment variables</li>
-          <li>Signed login cookies that survive restarts, and an invite code so strangers can't use up the Gemini quota</li>
-          <li>An optional free Postgres database (Neon) to keep uploads and accounts</li>
-          <li>A phone layout: talk button at the bottom, orb above, screen kept awake</li>
-        </ul>
-      </div></article>
-
-      <article class="step" data-step="8" data-stop><div class="card">
-        <span class="idx">08 / 09 · Field testing</span>
-        <h3>Three problems found in real use, and fixed.</h3>
-        <p>It worked perfectly on the first run after deployment, then got unreliable. Each problem was reproduced and measured before it was fixed.</p>
-      </div></article>
-
-      <article class="step" data-step="9" data-stop><div class="card">
-        <span class="idx">09 / 09 · Try it</span>
-        <h3>Light enough for free hosting.</h3>
-        <p>The server itself does little work: Gemini handles the speech and the language. Most of the delay is the network round trip to Google.</p>
-        <p class="note">The free server sleeps after 15 quiet minutes, and the first visit then takes about a minute. This page woke it when it opened; the dot at the top right shows its status.</p>
       </div></article>
     </div>
 
@@ -607,58 +557,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 7 · deployment -->
-      <div class="scene" data-show="7">
-        <div class="deploy">
-          <div class="col">
-            <div class="node" style="--i:0"><div class="ico">📱</div><b>Phone</b><span>Chrome or Safari, mic allowed</span></div>
-            <div class="node" style="--i:1"><div class="ico">💻</div><b>Laptop</b><span>any browser</span></div>
-          </div>
-          <div class="link" style="--i:0"></div>
-          <div class="col">
-            <div class="node hot" style="--i:2"><div class="ico">☁️</div><b>Render (free tier)</b>
-              <ul><li>HTTPS + WebSockets</li><li>One FastAPI server, one port</li><li>Invite code to register</li><li>Signed cookies, 30-day sessions</li><li><code>/healthz</code> health check</li></ul></div>
-            <div class="node opt" style="--i:3"><div class="ico">🗄️</div><b>Neon Postgres (optional)</b><span>keeps accounts, uploads, settings across restarts</span></div>
-          </div>
-          <div class="link" style="--i:1"></div>
-          <div class="col">
-            <div class="node" style="--i:4"><div class="ico">✦</div><b>Gemini API</b><span>Live voice · embeddings · document reading</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 8 · bugs -->
-      <div class="scene" data-show="8">
-        <div class="bugs">
-          <div class="bug" style="--i:0"><span class="tag">Problem 1</span><h4>It stuttered, stopping and starting mid-sentence</h4>
-            <div class="row"><b>Cause, measured</b>It was hearing itself. Just 0.15 s of its own voice reaching the mic made Gemini cut its reply within 0.3 s.</div>
-            <div class="fix"><b>Fix:</b> the mic stays muted from the first sound of a reply until the speaker is quiet, and replies are buffered 0.2 s so small gaps don't reopen it.</div></div>
-          <div class="bug" style="--i:1"><span class="tag">Problem 2</span><h4>"Connecting…" took far too long</h4>
-            <div class="row"><b>Cause, measured</b>Every conversation rebuilt the Gemini client: about 1.7 s of CPU, roughly 17 s on Render's tenth of a CPU.</div>
-            <div class="fix"><b>Fix:</b> build the client once and reuse it, warmed up in the background at startup.</div></div>
-          <div class="bug" style="--i:2"><span class="tag">Problem 3</span><h4>Stuck on <span class="bn">শুনছি…</span>, while typing still worked</h4>
-            <div class="row"><b>Cause, measured</b>Google's preview voice model was failing: <code>gemini-3.1-flash-live-preview</code> failed 5 of 5 voice tests; <code>gemini-3.8-live</code> passed 5 of 5.</div>
-            <div class="fix"><b>Fix:</b> default to the working model, add a model switch to the admin panel, and show a clear "Gemini isn't responding" message.</div></div>
-        </div>
-      </div>
-
-      <!-- 9 · try it -->
-      <div class="scene" data-show="9">
-        <div class="tryit">
-          <div class="va-app small">
-            <div class="va-top"><i></i><span>ব্র্যাক ভয়েস সহকারী</span><i></i></div>
-            <div class="va-orb"><canvas data-orb="voice2" width="560" height="560"></canvas></div>
-            <div class="va-state">শুনছি…</div>
-          </div>
-          <div class="side-panel">
-            <div class="metrics"><div><b>~100 MB</b><span>server memory</span></div><div><b>~0%</b><span>CPU when idle</span></div><div><b>16 ms</b><span>CPU per search</span></div></div>
-            <div class="qr-card"><div class="qr" data-qr="https://brac-voice-assistant.onrender.com/"></div><b>Scan to try it</b><span>brac-voice-assistant.onrender.com</span></div>
-            <button class="btn" data-popup="https://brac-voice-assistant.onrender.com/">Open the live assistant ↗</button>
-            <p class="note">Opens in its own window so the microphone and sign-in work normally.</p>
-          </div>
-        </div>
-      </div>
     </div></div>
   </div>
 </section>
@@ -669,11 +567,10 @@
 <section class="chapter" id="local" data-theme="local" data-chapter="local" data-label="Voice · Local">
   <header class="ch-intro" data-stop>
     <div class="big-n" aria-hidden="true">৩</div>
-    <p class="kicker">Chapter 3 <span class="tag">Deep dive · 3 of 3</span></p>
+    <p class="kicker">Chapter 3</p>
     <h2>The same conversation, with no cloud at all.</h2>
     <p class="lede">A fully local, real-time Bengali voice assistant. Speech recognition, the language model, retrieval and speech synthesis all run on one machine, so no audio and no document ever leaves it. The design target is under one second from the end of a question to the first word of the answer.</p>
     <div class="chips">
-      <span class="chip solid">Target: NVIDIA DGX Spark</span>
       <span class="chip">Python asyncio pipeline</span>
       <span class="chip">Silero VAD</span>
       <span class="chip">BanglaASR</span>
@@ -687,7 +584,7 @@
   <div class="scrolly">
     <div class="steps">
       <article class="step" data-step="1" data-stop><div class="card">
-        <span class="idx">01 / 09 · Why local</span>
+        <span class="idx">01 / 08 · Why local</span>
         <h3>Private, free to run, and independent of the internet.</h3>
         <ul>
           <li><b>Privacy:</b> member questions and BRAC documents never leave the machine</li>
@@ -695,44 +592,42 @@
           <li><b>Works offline,</b> where connectivity is poor</li>
           <li><b>Latency under our control,</b> with no network round trip</li>
         </ul>
-        <p>The trade-off: we carry the hardware, and the quality of open models. It's built for the MSI EdgeXpert (NVIDIA DGX Spark: GB10 Grace Blackwell, ARM64, 128 GB unified memory).</p>
+        <p>The trade-off: we carry the hardware, and the quality of open models.</p>
       </div></article>
 
       <article class="step" data-step="2" data-stop><div class="card">
-        <span class="idx">02 / 09 · The pipeline</span>
+        <span class="idx">02 / 08 · The pipeline</span>
         <h3>Nine stages, one machine.</h3>
         <p>A detector notices when you stop talking. Your speech is transcribed, matched against the documents, answered by a local language model, and spoken back phrase by phrase.</p>
         <p>The microphone loop never waits for an answer: responses run in the background, so it keeps listening while the assistant talks.</p>
       </div></article>
 
       <article class="step" data-step="3" data-stop><div class="card">
-        <span class="idx">03 / 09 · Models</span>
+        <span class="idx">03 / 08 · Models</span>
         <h3>Open models, chosen for Bengali.</h3>
         <p>Every model is pre-trained and openly licensed; nothing was trained or fine-tuned. The work is the integration: the real-time pipeline, turn-taking, interruption, Bengali text handling, retrieval and instrumentation.</p>
         <p>Speech recognition and speech synthesis each have two fallbacks behind one interface, so switching is a one-line config change.</p>
       </div></article>
 
       <article class="step" data-step="4" data-stop><div class="card">
-        <span class="idx">04 / 09 · Speed</span>
+        <span class="idx">04 / 08 · Speed</span>
         <h3>It starts speaking before the answer is finished.</h3>
         <p>The language model streams its answer word by word. As soon as the first phrase is complete (split on <span class="bn">। ? ! , ;</span>, at least 15 characters) it goes to speech synthesis.</p>
         <p>While phrase one plays, phrase two is being synthesised and the model is still writing phrase three. Heavy GPU work runs off the main loop, so listening never stalls.</p>
       </div></article>
 
       <article class="step" data-step="5" data-stop><div class="card">
-        <span class="idx">05 / 09 · Every millisecond</span>
+        <span class="idx">05 / 08 · Every millisecond</span>
         <h3>Small choices that add up.</h3>
         <ul>
           <li>No hidden "thinking" from the model, and short answers: 120 tokens at most, 40 for greetings</li>
           <li>Greetings skip the document search entirely</li>
           <li>A mixture-of-experts model: only 3.8B of its 25.2B parameters work on each word</li>
-          <li>Every model warms up at startup, and the language model is never unloaded</li>
-          <li>Fast, greedy speech decoding; voice detection on the CPU; embeddings cached on disk</li>
         </ul>
       </div></article>
 
       <article class="step" data-step="6" data-stop><div class="card">
-        <span class="idx">06 / 09 · Conversation</span>
+        <span class="idx">06 / 08 · Conversation</span>
         <h3>It behaves like a conversation, not a command line.</h3>
         <ul>
           <li><b>Interruptions:</b> start talking over it and it stops at once, drops what it was about to say, and listens</li>
@@ -743,23 +638,16 @@
       </div></article>
 
       <article class="step" data-step="7" data-stop><div class="card">
-        <span class="idx">07 / 09 · Bengali text</span>
+        <span class="idx">07 / 08 · Bengali text</span>
         <h3>Numbers read the way a person says them.</h3>
         <p>Speech models stumble over digits and symbols. Before synthesis, amounts, percentages, dates and decimals, in Bengali or Latin digits, are rewritten as Bengali words.</p>
         <p class="note">The example on the right is real output from the project's normaliser.</p>
       </div></article>
 
       <article class="step" data-step="8" data-stop><div class="card">
-        <span class="idx">08 / 09 · Two approaches</span>
+        <span class="idx">08 / 08 · Two approaches</span>
         <h3>Cloud or local: what each one buys you.</h3>
         <p>The two assistants answer the same kind of question in the same orb interface, but make opposite trade-offs. The cloud version is easy to host and sounds more natural; the local version keeps everything in-house.</p>
-      </div></article>
-
-      <article class="step" data-step="9" data-stop><div class="card">
-        <span class="idx">09 / 09 · Status</span>
-        <h3>Where it stands, honestly.</h3>
-        <p>The pipeline runs on my own PC. Running it on the DGX Spark is a separate deployment path, prepared with NVIDIA containers but not yet run on the device.</p>
-        <p>Next: echo cancellation so it works on speakers, streaming speech recognition and synthesis, and a proper accuracy evaluation.</p>
       </div></article>
     </div>
 
@@ -773,7 +661,7 @@
               <div class="va-orb"><canvas data-orb="local" width="600" height="600"></canvas></div>
               <div class="va-state" data-local-label>শুনছি…</div>
             </div>
-            <div class="label"><b>One box, everything on it</b>MSI EdgeXpert · NVIDIA DGX Spark</div>
+            <div class="label"><b>One computer, everything on it</b>Speech, language model, search and voice</div>
           </div>
           <div class="cloud-x">
             <div class="row" style="--i:0"><span class="ic">☁️</span><div><b class="gone">Cloud API calls</b><span>none at runtime</span></div></div>
@@ -788,11 +676,11 @@
       <div class="scene" data-show="2 5">
         <div class="vpipe" data-vpipe>
           <div class="vstage" style="--i:0"><span class="num">1</span><div><b>Microphone</b><span>16 kHz, 32 ms frames</span></div><span class="where">CPU</span><div class="techs"><span class="tech">never blocks on a reply</span></div></div>
-          <div class="vstage" style="--i:1"><span class="num">2</span><div><b>Silero VAD</b><span>speech starts at 200 ms, ends after 500 ms of silence</span></div><span class="where">CPU</span><div class="techs"><span class="tech">runs on CPU, keeps GPU free</span></div></div>
-          <div class="vstage" style="--i:2"><span class="num">3</span><div><b>BanglaASR</b><span>speech to Bengali text</span></div><span class="where">GPU</span><div class="techs"><span class="tech">greedy decoding</span><span class="tech" style="--i:1">bf16</span><span class="tech" style="--i:2">warmed at startup</span></div></div>
+          <div class="vstage" style="--i:1"><span class="num">2</span><div><b>Silero VAD</b><span>speech starts at 200 ms, ends after 500 ms of silence</span></div><span class="where">CPU</span></div>
+          <div class="vstage" style="--i:2"><span class="num">3</span><div><b>BanglaASR</b><span>speech to Bengali text</span></div><span class="where">GPU</span></div>
           <div class="vstage" style="--i:3"><span class="num">4</span><div><b>Router</b><span>greeting or knowledge question?</span></div><span class="where">CPU</span><div class="techs"><span class="tech">greetings skip search</span></div></div>
-          <div class="vstage" style="--i:4"><span class="num">5</span><div><b>Hybrid RAG</b><span>top 3 passages, bge-m3 + TF-IDF</span></div><span class="where">Ollama</span><div class="techs"><span class="tech">embedding cache</span></div></div>
-          <div class="vstage" style="--i:5"><span class="num">6</span><div><b>gemma4:26b</b><span>streams the answer word by word</span></div><span class="where">GPU</span><div class="techs"><span class="tech">think = off</span><span class="tech" style="--i:1">120-token cap</span><span class="tech" style="--i:2">MoE: 3.8B active</span><span class="tech" style="--i:3">never unloaded</span></div></div>
+          <div class="vstage" style="--i:4"><span class="num">5</span><div><b>Hybrid RAG</b><span>top 3 passages, bge-m3 + TF-IDF</span></div><span class="where">Ollama</span></div>
+          <div class="vstage" style="--i:5"><span class="num">6</span><div><b>gemma4:26b</b><span>streams the answer word by word</span></div><span class="where">GPU</span><div class="techs"><span class="tech">think = off</span><span class="tech" style="--i:1">120-token cap</span><span class="tech" style="--i:2">MoE: 3.8B active</span></div></div>
           <div class="vstage" style="--i:6"><span class="num">7</span><div><b>Phrase splitter</b><span>। ? ! , ; at least 15 characters</span></div><span class="where">CPU</span><div class="techs"><span class="tech">first phrase out early</span></div></div>
           <div class="vstage" style="--i:7"><span class="num">8</span><div><b>Bengali normaliser</b><span>numbers, ৳, %, dates to words</span></div><span class="where">CPU</span></div>
           <div class="vstage" style="--i:8"><span class="num">9</span><div><b>EMTIAZZ VITS → speaker</b><span>Bangladeshi accent, played strictly in order</span></div><span class="where">GPU</span><div class="techs"><span class="tech">synthesis overlaps playback</span><span class="tech" style="--i:1">fillers ready at startup</span></div></div>
@@ -810,7 +698,7 @@
           <div class="model" style="--i:5"><span class="role">Alternatives (A/B)</span><b>gemma4:e4b · qwen3.6:35b-a3b</b><span>Smaller or alternative models behind the same setting</span><span class="lic">Ollama</span></div>
           <div class="model fb" style="--i:6"><span class="role">STT fallbacks</span><b>kazalbrur Conformer 120M · AI4Bharat IndicConformer 600M</b><span class="lic">Apache-2.0 · MIT</span></div>
           <div class="model fb" style="--i:7"><span class="role">TTS fallbacks</span><b>facebook/mms-tts-ben · AI4Bharat Indic Parler-TTS</b><span class="lic warn">MMS is non-commercial</span></div>
-          <div class="model fb" style="--i:8"><span class="role">Memory, estimated</span><b>~21–23 GB of 128 GB</b><span>Everything stays loaded at once</span></div>
+          <div class="model fb" style="--i:8"><span class="role">Memory, estimated</span><b>~21–23 GB in total</b><span>Everything stays loaded at once</span></div>
         </div>
       </div>
 
@@ -879,32 +767,6 @@
           </tbody>
         </table>
       </div>
-
-      <!-- 9 · status (+ optional video) -->
-      <div class="scene" data-show="9">
-        <div class="stack" style="gap:16px">
-          <div class="video-slot" data-video hidden><video src="assets/local-demo.mp4" controls preload="metadata" playsinline></video></div>
-          <div class="status">
-            <div class="panel p-out" style="--i:0"><h4>Ruled out</h4><ul>
-              <li>faster-whisper: no official CUDA build for ARM64, so it would silently run on the CPU</li>
-              <li>Orpheus Bangla TTS: fragmented community versions, gated base model</li>
-              <li>Pipecat / LiveKit: built for WebRTC calls; too heavy for one mic and speaker</li>
-            </ul></div>
-            <div class="panel p-gap" style="--i:1"><h4>Known gaps</h4><ul>
-              <li>No echo cancellation yet: use a headset, or it can interrupt itself</li>
-              <li>Streaming transcription is wired in but doesn't cut latency yet</li>
-              <li>Speech synthesis isn't streaming within a phrase</li>
-              <li>The router is a keyword list</li>
-            </ul></div>
-            <div class="panel p-next" style="--i:2"><h4>Next</h4><ul>
-              <li>Acoustic echo cancellation</li>
-              <li>Streaming speech recognition and synthesis</li>
-              <li>Accuracy tests: word error rate, answer quality</li>
-              <li>Bring-up on the DGX Spark</li>
-            </ul></div>
-          </div>
-        </div>
-      </div>
     </div></div>
   </div>
 </section>
@@ -915,8 +777,8 @@
 <section class="chapter" id="pm" data-theme="pm" data-chapter="pm" data-label="Project Manager">
   <header class="ch-intro" data-stop>
     <div class="big-n" aria-hidden="true">৪</div>
-    <p class="kicker">Chapter 4 <span class="tag">A glance</span></p>
-    <h2>From a six-question interview to signed-off project documents.</h2>
+    <p class="kicker">Chapter 4</p>
+    <h2>From a project idea to signed-off project documents.</h2>
     <p class="lede">A multi-agent project management platform: AI agents draft a project's documents one after another, and the team reviews, signs and versions each one. It runs entirely on a local model, with no API cost.</p>
     <div class="chips">
       <span class="wip">Work in progress</span>
@@ -932,7 +794,7 @@
       <article class="step" data-step="1" data-stop><div class="card">
         <span class="idx">01 / 03 · Agents in a chain</span>
         <h3>Each document builds on everything approved before it.</h3>
-        <p>A Q&amp;A agent asks six fixed questions. Then the Charter, Business Requirements (BRD), Software Requirements (SRS) and Work Breakdown Structure (WBS) agents each draft their document in order, from the answers and every document already approved.</p>
+        <p>A Q&amp;A agent gathers the project's requirements from the team. Then the Charter, Business Requirements (BRD), Software Requirements (SRS) and Work Breakdown Structure (WBS) agents each draft their document in order, from the answers and every document already approved.</p>
         <p>One AI call per document keeps it fast on modest hardware.</p>
       </div></article>
       <article class="step" data-step="2" data-stop><div class="card">
@@ -948,7 +810,7 @@
       <article class="step" data-step="3" data-stop><div class="card">
         <span class="idx">03 / 03 · Live</span>
         <h3>The working build.</h3>
-        <p>This is the running app on my machine. Its six questions have been answered and locked, and the AI has drafted the charter, which is now waiting for approval.</p>
+        <p>This is the running app on my machine. Its Q&amp;A has been answered and locked, and the AI has drafted the charter, which is now waiting for approval.</p>
         <p class="note">Demo accounts are listed on its sign-in page. Expand it to use it full size.</p>
       </div></article>
     </div>
@@ -1007,7 +869,7 @@
 <section class="chapter" id="field" data-theme="field" data-chapter="field" data-label="Field Visits">
   <header class="ch-intro" data-stop>
     <div class="big-n" aria-hidden="true">৫</div>
-    <p class="kicker">Chapter 5 <span class="tag">A glance</span></p>
+    <p class="kicker">Chapter 5</p>
     <h2>Where field visits happen, how they went, and what still needs fixing.</h2>
     <p class="lede">A Field Visit Tracker for BRAC Microfinance. Staff log their visits, members and staff rate them, managers see it all on a map of Bangladesh, and problems raised during a visit are tracked until someone fixes them.</p>
     <div class="chips">
@@ -1128,6 +990,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
 <script src="assets/bd-map.js" defer></script>
-<script src="assets/showcase.js?v=5" defer></script>
+<script src="assets/showcase.js?v=7" defer></script>
 </body>
 </html>

@@ -766,3 +766,25 @@ body.has-expanded .scene.on { transform: none; }
 .outro .qr-card { width: 172px; padding: 14px; }
 .outro .qr-card .qr { width: 124px; height: 124px; }
 .outro .closing { margin-left: auto; font-size: clamp(30px, 3.4vw, 52px); font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
+
+/* Agami step 1: who this version is for */
+.persona { width: min(430px, 100%); padding: 26px; border-radius: 24px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 24px 60px -30px rgba(60,20,40,.4); }
+.persona .who { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.persona .who img { width: 72px; height: 72px; border-radius: 50%; background: #FCE3F0; padding: 8px; flex: none; }
+.persona .who b { display: block; font-size: 20px; line-height: 1.25; }
+.persona .who span { font-size: 14px; color: var(--muted); }
+.persona ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.persona li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 6%, transparent); opacity: 0; transform: translateY(10px); transition: opacity .45s, transform .45s var(--ease); }
+.scene.on .persona li { opacity: 1; transform: none; transition-delay: calc(.25s + var(--i) * 110ms); }
+.persona li .ic { font-size: 22px; line-height: 1.2; }
+.persona li b { display: block; font-size: 16px; }
+.persona li span { font-size: 13.5px; color: var(--muted); }
+
+/* Agami step 10: APK and browser codes side by side */
+.qr-pair { display: flex; gap: 14px; }
+.qr-pair .qr-card { width: 176px; padding: 14px; }
+.qr-pair .qr-card .qr { width: 140px; height: 140px; }
+
+/* a chip that opens the live voice assistant */
+.chip-btn { cursor: pointer; }
+.chip-btn:hover { filter: brightness(1.08); }

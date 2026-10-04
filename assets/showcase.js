@@ -290,10 +290,6 @@
     voiceLabel.textContent = VA_LABELS[m];
     $$('div[data-st]', legend).forEach(d => d.classList.toggle('on', d.dataset.st === m));
   });
-  const voice2Cycle = cycler(orbs.get('voice2'), ['listening', 'thinking', 'speaking'], m => {
-    const lab = $('[data-orb="voice2"]').closest('.va-app').querySelector('.va-state');
-    lab.textContent = VA_LABELS[m];
-  });
   const localLabel = $('[data-local-label]');
   const localCycle = cycler(orbs.get('local'), ['listening', 'thinking', 'speaking'], m => { localLabel.textContent = VA_LABELS[m]; });
 
@@ -358,14 +354,6 @@
     pipeTimer = setInterval(() => { st.forEach((s, j) => s.classList.toggle('hot', j === i % st.length)); i++; }, 650);
   }
   function pipeStop() { clearInterval(pipeTimer); $$('.vstage', vpipe).forEach(s => s.classList.remove('hot')); }
-
-  // Optional demo video for the local assistant
-  const vslot = $('[data-video]');
-  if (vslot) {
-    const v = $('video', vslot);
-    v.addEventListener('loadedmetadata', () => { vslot.hidden = false; });
-    v.addEventListener('error', () => { vslot.remove(); }, true);
-  }
 
   /* ---------- Field map ---------- */
   const RAMP = { lo: [205, 226, 251], hi: [13, 54, 107] };
@@ -468,7 +456,6 @@
     },
     voice(n) {
       n === 1 ? voiceCycle.start() : voiceCycle.stop();
-      n === 9 ? voice2Cycle.start() : voice2Cycle.stop();
     },
     local(n) {
       n === 1 ? localCycle.start() : localCycle.stop();
